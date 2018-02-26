@@ -59,23 +59,50 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Yoses comunista che vota Monti',
           'Nadali togli Zuca', 'Che fantastica storia è la vita']
 
+# this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
+# the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
+# 'last_sent' hold the last personalised messages that were to that person (to check for repetitions)
 personalized_messages = {
-    'Porci': {'id': 44834863, 'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"]},
-    'Leo': {'id': 24030913, 'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo",
-                                         "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca']},
-    'Beppe': {'id': 20344105, 'messages': ["Rozzi"]},
-    'Frau': {'id': 38976241, 'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
-                                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi"]},
-    'Mex': {'id': 0, 'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
-                                  "Massimo\nCosa significa per te avere successo?"]},
-    'Fora': {'id': 80692823, 'messages': ["Frocia"]},
-    'Luca': {'id': 24510037, 'messages': ["Ma Ruffi\nDormivi?"]},
-    'Gigi': {'id': 308878806, 'messages': ["Grande Gigi"]},
-    'Nico Ago': {'id': 0, 'messages': ["Nico Ago sei merda con bisturi",
-                                       "Nico Ago\nVali meno del cestino degli scarti ospedalieri"]},
-    'Trabucco': {'id': 0, 'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"]},
-    'Marassi': {'id': 0, 'messages': ["Grande André\nHai ficcato?"]},
-    'Yoses': {'id': 0, 'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti']}}
+    'Porci': {'id': 44834863,
+              'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"],
+              'last_sent': []},
+    'Leo': {'id': 24030913,
+            'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo",
+                         "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca'],
+            'last_sent': []},
+    'Beppe': {'id': 20344105,
+              'messages': ["Rozzi"],
+              'last_sent': []},
+    'Frau': {'id': 38976241,
+             'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
+                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi"],
+             'last_sent': []},
+    'Mex': {'id': 0,
+            'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
+                         "Massimo\nCosa significa per te avere successo?"],
+            'last_sent': []},
+    'Fora': {'id': 80692823,
+             'messages': ["Frocia"],
+             'last_sent': []},
+    'Luca': {'id': 24510037,
+             'messages': ["Ma Ruffi\nDormivi?"],
+             'last_sent': []},
+    'Gigi': {'id': 308878806,
+             'messages': ["Grande Gigi"],
+             'last_sent': []},
+    'Nico Ago': {'id': 0,
+                 'messages': ["Nico Ago sei merda con bisturi",
+                              "Nico Ago\nVali meno del cestino degli scarti ospedalieri"],
+                 'last_sent': []},
+    'Trabucco': {'id': 0,
+                 'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"],
+                 'last_sent': []},
+    'Marassi': {'id': 0,
+                'messages': ["Grande André\nHai ficcato?"],
+                'last_sent': []},
+    'Yoses': {'id': 0,
+              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti'],
+              'last_sent': []}}
 
 
 # this function is used to send a personalised message
@@ -94,11 +121,12 @@ def send_personalized_message(message):
         output_message = random.choice(quotes)
     else:
         output_message = random.choice(personalized_messages[reply_to]['messages'])
-        
+
         # checks if the chosen message has already been sent recently to that user
         while output_message in personalized_messages[reply_to]['last_sent']:
+            print('xiao')
             output_message = random.choice(personalized_messages[reply_to]['messages'])
-        
+
         # updates 'last_sent' to only keep the last messages
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
@@ -127,7 +155,7 @@ def interaction(message):
         elif 'scherzo' in text.lower():
             bot.sendMessage(last_user, 'Sei un grande')
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 4)
+            dice_roll = random.randint(1, 16)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
             elif 2 <= dice_roll <= 4:
@@ -156,9 +184,11 @@ for message in received_messages:
 while True:
     # repeats the loop every 1 seconds
     time.sleep(1)
+    print('eccomi')
 
     # variable that stores most recent messages
     received_messages = [x for x in bot.getUpdates(offset=offset)]
+    print(received_messages[-1])
 
     # saves the ID of the user who wrote the last message
     last_user = received_messages[-1]['message']['chat']['id']
@@ -182,4 +212,4 @@ while True:
         previous_message = new_message
         offset = received_messages[-1]['update_id'] - 10000  # only sees the last 10000 messages
         if offset < 0:
-            offset = 0
+            offset = 1
