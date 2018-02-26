@@ -70,7 +70,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
-          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
+          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Madonna brutta pellegrina\nAiutatemi',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
           'Non come qualcun altro Agostini']
 
