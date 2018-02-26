@@ -51,21 +51,22 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
           "Trabbi\nCosa ne pensi di NCIS 9x10?", "Leonardo\nCosa ne pensi dei credenti?",
           "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma Ruffi\nDormivi?",
-          "Dio can frau", "Frocia", "Nico Ago sei merda con bisturi",
+          "Dio can frau", "Frocia", "Nico Ago sei merda con bisturi", "Ca' Fosfati",
           "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
           "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè Leonardo", "Vali meno del trofeo TIM",
           "Vali meno di Papi", "Frau sei Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
           "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
           "Nico Ago\nVali meno del cestino degli scarti ospedalieri", "Porco dio vali meno della carta del prosciutto",
           "Dio can persa anche questa al fanta", "Leonardo\nSecondo te l'economia è una scienza?",
-          "Yoses\nPensi di essere comunista?", "Frau che fa tesi sui pedalò",
+          "Yoses\nPensi di essere comunista?", "Frau che fa tesi sui pedalò", 'Rimettere Borto',
           "Porci ma quando esce articolo di ultimo uomo su Akinfeev?", "Stai buono", "Stai fermo",
           "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Yoses comunista che vota Monti',
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
-          "Ca' Fosfati", 'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
-          'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo']
+          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
+          'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
+          'Non come qualcun altro Agostini']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -84,7 +85,8 @@ personalized_messages = {
               'last_sent': []},
     'Frau': {'id': 38976241,
              'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
-                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo'],
+                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo',
+                          'Frau sei Enrico Papi'],
              'last_sent': []},
     'Mex': {'id': 0,
             'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
@@ -100,7 +102,7 @@ personalized_messages = {
              'messages': ["Grande Gigi"],
              'last_sent': []},
     'Nico Ago': {'id': 0,
-                 'messages': ["Nico Ago sei merda con bisturi",
+                 'messages': ["Nico Ago sei merda con bisturi", 'Non come qualcun altro Agostini',
                               "Nico Ago\nVali meno del cestino degli scarti ospedalieri"],
                  'last_sent': []},
     'Trabucco': {'id': 0,
@@ -111,7 +113,8 @@ personalized_messages = {
                 'last_sent': []},
     'Yoses': {'id': 0,
               'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti',
-                           'Ma Yoses, sei stupido?', 'AAA cercasi coerenza'],
+                           'Ma Yoses, sei stupido?', 'AAA cercasi coerenza',
+                           'Non come qualcun altro Agostini'],
               'last_sent': []},
     'Cevallos': {'id': 1168808856,
                  'messages': ['Dio can Ceva'],
@@ -155,6 +158,12 @@ def send_personalized_message(message):
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
 
+    # if ZucaBot is replying to Zuca, there is a chance it will just repeat what he said
+    if reply_to == 'Zuca':
+        dice_roll = random.randint(1, 5)
+        if dice_roll < 5:
+            output_message = message['text']
+
     bot.sendMessage(chat, output_message)
 
 
@@ -164,6 +173,14 @@ def interaction(message):
     # try to see if the received message contains any text, if so interacts, otherwise do nothing
     try:
         text = message['text']
+        
+        # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
+        try:
+            if received_messages[-1]['message']['text'] == received_messages[-2]['message']['text'] and \
+               received_messages[-2]['message']['text'] == received_messages[-3]['message']['text']:
+                bot.sendMessage(chat, text)
+        except KeyError:
+            pass
 
         # answer based on the text
         if 'russia' in text.lower():
@@ -204,6 +221,14 @@ def interaction(message):
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: buono')
+        elif "ca" in text.lower() and "foscari" in text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, "Ca' Fosfati")
+        elif 'zuca, sei' in text.lower() or 'zuca sei' in text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, "Ma che cazzo vuoi\nFallito di merda")
         elif 'boldrini' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
@@ -214,6 +239,11 @@ def interaction(message):
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Sì, ma con le protesi',
                                                      'Sì, ma senza protesi']))
+        elif 'hahaha' in text.lower() or 'ahhah' in text.lower():
+            dice_roll = random.randint(1, 20)
+            if dice_roll == 1:
+                bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
+                                                     "L'unica cosa che fa ridere è la tua vita"]))
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 16)
             if dice_roll == 1:
