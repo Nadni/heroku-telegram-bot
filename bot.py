@@ -46,7 +46,7 @@ russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Rya
 quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei calcinacci",
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
           "Trabbi\nCosa ne pensi di NCIS 9x10?", "Leonardo\nCosa ne pensi dei credenti?",
-          "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma ruffi\nDormivi?",
+          "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma Ruffi\nDormivi?",
           "Dio can frau", "Frocia", "Nico Ago sei merda con bisturi",
           "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
           "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè Leonardo", "Vali meno del trofeo TIM",
@@ -56,8 +56,42 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Dio can persa anche questa al fanta", "Leonardo\nSecondo te l'economia è una scienza?",
           "Yoses\nPensi di essere comunista?", "Frau che fa tesi sui pedalò",
           "Porci ma quando esce articolo di ultimo uomo su Akinfeev?", "Stai buono", "Stai fermo",
-          "Frau\nRimetti Nadali", "Frau\nButta fuori trabbi", 'Yoses comunista che vota Monti',
+          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Yoses comunista che vota Monti',
           'Nadali togli Zuca', 'Che fantastica storia è la vita']
+
+personalized_messages = {
+    'Porci': {'id': 44834863, 'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"]},
+    'Leo': {'id': 24030913, 'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo",
+                                         "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca']},
+    'Beppe': {'id': 20344105, 'messages': ["Rozzi"]},
+    'Frau': {'id': 38976241, 'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
+                                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi"]},
+    'Mex': {'id': 0, 'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
+                                  "Massimo\nCosa significa per te avere successo?"]},
+    'Fora': {'id': 80692823, 'messages': ["Frocia"]},
+    'Luca': {'id': 24510037, 'messages': ["Ma Ruffi\nDormivi?"]},
+    'Gigi': {'id': 308878806, 'messages': ["Grande Gigi"]},
+    'Nico Ago': {'id': 0, 'messages': ["Nico Ago sei merda con bisturi",
+                                       "Nico Ago\nVali meno del cestino degli scarti ospedalieri"]},
+    'Trabucco': {'id': 0, 'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"]},
+    'Marassi': {'id': 0, 'messages': ["Grande André\nHai ficcato?"]},
+    'Yoses': {'id': 0, 'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti']}}
+
+
+# this function is used to send a personalised message
+def send_personalized_message(message):
+    
+    # checks if the user who sent the message is in the dictionary "personalized_messages"
+    personalized = False
+    for user in personalized_messages:
+        if personalized_messages[user]['id'] == message['from']['id']:
+            personalized = True
+    
+    # if the user is not in the dictionary, just send a random message, otherwise choose appropriately
+    if personalized is False:
+        bot.sendMessage(last_user, random.choice(quotes))
+    else:
+        bot.sendMessage(last_user, '')
 
 
 # this is the function that will be called every time ZucaBot receives a new message
@@ -81,23 +115,33 @@ def interaction(message):
         elif 'scherzo' in text.lower():
             bot.sendMessage(last_user, 'Sei un grande')
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 4)
+            dice_roll = random.randint(1, 8)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
+            elif dice_roll in [2, 4]:
+                send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            action = random.randint(1, 15)
-            if action == 1:
+            dice_roll = random.randint(1, 5)
+            if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
 
     except KeyError:
         pass
 
+# prints information on the received message
+x = [print() for _ in range(10)]
+for message in received_messages:
+    print('\n\n\n\n\n\n\n\n\n\n')
+    for key in message['message']:
+        print(key)
+        print(message['message'][key])
+
 
 # main loop
 while True:
-    # repeats the loop every 3 seconds
-    time.sleep(3)
+    # repeats the loop every 1 seconds
+    time.sleep(1)
 
     # variable that stores most recent messages
     received_messages = [x for x in bot.getUpdates(offset=offset)]
@@ -111,15 +155,17 @@ while True:
     if new_message != previous_message:
 
         # interacts
-        interaction(received_messages[-1]['message'])
+        # interaction(received_messages[-1]['message'])
 
         # prints information on the received message
         x = [print() for _ in range(10)]
+        print('\n\n\n\n\n\n\n\n\n\n')
         for key in received_messages[-1]['message']:
             print(key)
             print('___________________', received_messages[-1]['message'][key])
 
         # discards the last message and gets ready to receive a new one
         previous_message = new_message
-        offset = new_message = received_messages[-1]['update_id'] - 10  # only sees the last 10 messages
-
+        offset = received_messages[-1]['update_id'] - 10000  # only sees the last 10000 messages
+        if offset < 0:
+            offset = 0
