@@ -256,6 +256,10 @@ def interaction(message):
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
+        elif 'erdogan' in text.lower() or 'tayyip':
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerato: cattivo')
         elif 'renzi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
@@ -289,6 +293,8 @@ def interaction(message):
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Suca')
         elif 'dimmi' in text.lower() and 'zuca' in text.lower():
+            bot.sendMessage(chat, random.choice(quotes))
+        elif 'dicci' in text.lower() and 'zuca' in text.lower():
             bot.sendMessage(chat, random.choice(quotes))
         elif 'zuca' in lower_text and '?' == lower_text[-1]:
             dice_roll = random.randint(1, 3)
