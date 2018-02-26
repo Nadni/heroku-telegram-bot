@@ -75,7 +75,9 @@ def interaction(message):
         elif 'papirone' in text.lower():
             bot.sendMessage(last_user, 'Massimone')
         elif 'frau' in text.lower():
-            bot.sendMessage(last_user, 'Ebreo')
+            dice_roll = random.randint(1, 4)
+            if dice_roll == 1:
+                bot.sendMessage(last_user, 'ebreo')
         elif 'scherzo' in text.lower():
             bot.sendMessage(last_user, 'Sei un grande')
         elif 'zuca' in text.lower():
@@ -120,4 +122,4 @@ while True:
         # discards the last message and gets ready to receive a new one
         previous_message = new_message
         offset = new_message = received_messages[-1]['update_id'] - 10  # only sees the last 10 messages
-        
+
