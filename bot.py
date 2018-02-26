@@ -230,7 +230,8 @@ def interaction(message):
                 bot.sendMessage(chat, 'Ebreo')
         elif 'scherzo' in text.lower():
             bot.sendMessage(chat, 'Sei un grande')
-        elif 'é' in text.lower() and 'perché' not in text.lower():
+        elif 'é' in text.lower() and 'perché' not in text.lower() and\
+                'né' not in text.lower() and 'sé' not in text.lower():
             bot.sendMessage(chat, '*è')
         elif "qual'è" in text.lower():
             bot.sendMessage(chat, '*qual è')
