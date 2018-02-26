@@ -70,9 +70,9 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
-          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Madonna brutta pellegrina\nAiutatemi',
+          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
-          'Non come qualcun altro Agostini']
+          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -167,7 +167,7 @@ def send_personalized_message(message):
     # if ZucaBot is replying to Zuca, there is a chance it will just repeat what he said
     if reply_to == 'Zuca':
         dice_roll = random.randint(1, 5)
-        if dice_roll < 5:
+        if dice_roll < 4:
             output_message = message['text']
 
     bot.sendMessage(chat, output_message)
@@ -245,16 +245,20 @@ def interaction(message):
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Sì, ma con le protesi',
                                                      'Sì, ma senza protesi']))
-        elif 'hahaha' in text.lower() or 'ahhah' in text.lower():
-            dice_roll = random.randint(1, 20)
+        elif 'hahaha' in text.lower() or 'ahhah' in text.lower() or 'rido' == text.lower():
+            dice_roll = random.randint(1, 60)
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
                                                      "L'unica cosa che fa ridere è la tua vita"]))
+        elif 'eh?' == text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Suca')
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 100)
+            dice_roll = random.randint(1, 70)
             if dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 4 <= dice_roll < 6:
+            elif 5 <= dice_roll < 6:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
