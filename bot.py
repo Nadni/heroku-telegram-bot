@@ -346,14 +346,14 @@ while True:
     start = datetime.time(1, 0, 0)
     end = datetime.time(3, 0, 0)
     if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, 14.400/loop_cycle)
+        dice_roll = random.randint(1, int(14.400/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, 'Chi Late?')
     # if it's early in the morning, has a small chance to ask '7.54 qualcuno?'
     start = datetime.time(6, 30, 0)
     end = datetime.time(7, 30, 0)
     if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, 14.400/loop_cycle)
+        dice_roll = random.randint(1, int(14.400/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, '7.54 qualcuno?')
 
