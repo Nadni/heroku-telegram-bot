@@ -94,7 +94,7 @@ personalized_messages = {
                           "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo',
                           'Frau sei Enrico Papi'],
              'last_sent': []},
-    'Mex': {'id': 0,
+    'Mex': {'id': 54573695,
             'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
                          "Massimo\nCosa significa per te avere successo?"],
             'last_sent': []},
