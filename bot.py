@@ -155,7 +155,7 @@ while True:
     if new_message != previous_message:
 
         # interacts
-        # interaction(received_messages[-1]['message'])
+        interaction(received_messages[-1]['message'])
 
         # prints information on the received message
         x = [print() for _ in range(10)]
