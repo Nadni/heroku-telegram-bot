@@ -294,7 +294,9 @@ def interaction(message):
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
                                                      "L'unica cosa che fa ridere è la tua vita",
-                                                     'Ridi ridi\ncoglione']))
+                                                     'Ridi ridi\ncoglione',
+                                                     'Non fa ridere, idiota',
+                                                     'Ridi perché ti sei guardato allo specchio?']))
         elif 'eh?' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
