@@ -117,14 +117,14 @@ def interaction(message):
         elif 'scherzo' in text.lower():
             bot.sendMessage(last_user, 'Sei un grande')
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 12)
+            dice_roll = random.randint(1, 16)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
             elif 2 <= dice_roll <= 3:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 50)
+            dice_roll = random.randint(1, 80)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
             elif 2 <= dice_roll <= 4:
