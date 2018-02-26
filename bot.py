@@ -251,17 +251,17 @@ def interaction(message):
                 bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
                                                      "L'unica cosa che fa ridere è la tua vita"]))
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 16)
-            if dice_roll == 1:
+            dice_roll = random.randint(1, 17)
+            if dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 2 <= dice_roll < 5:
+            elif 4 <= dice_roll < 6:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 150)
-            if 1 <= dice_roll < 3:
+            dice_roll = random.randint(1, 400)
+            if 1 <= dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 3 <= dice_roll < 6:
+            elif 5 <= dice_roll < 7:
                 send_personalized_message(message)
 
     except KeyError:
