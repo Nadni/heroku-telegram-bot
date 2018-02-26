@@ -284,7 +284,13 @@ while True:
     time.sleep(loop_cycle)
 
     # variable that stores most recent messages
-    received_messages = [x for x in bot.getUpdates(offset=offset)]
+    received_messages = []
+    for x in bot.getUpdates(offset=offset):
+        try:
+            check = x['message']
+            received_messages.append(x)
+        except KeyError:
+            pass
     print(received_messages[-1])
 
     # saves the ID of the chat who wrote the last message
