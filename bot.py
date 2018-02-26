@@ -72,7 +72,8 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
-          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi']
+          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi',
+          'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -168,11 +169,18 @@ def send_personalized_message(message):
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
 
-    # if ZucaBot is replying to Zuca, there is a chance it will just repeat what he said
+    # in some cases, based on who ZucaBot is replying to, sends special messages
     if reply_to == 'Zuca':
+        # has a random chance to just repeat what Zuca said
         dice_roll = random.randint(1, 5)
         if dice_roll < 4:
             output_message = message['text']
+    if reply_to == 'Leo':
+        text = message['text'].lower()
+        if text[-1] == '?':
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                output_message = 'Forse dovresti chiederlo a un costituzionalista'
 
     bot.sendMessage(chat, output_message)
 
@@ -186,8 +194,8 @@ def interaction(message):
 
         # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
         try:
-            if received_messages[-1]['message']['text'] == received_messages[-2]['message']['text'] and \
-               received_messages[-2]['message']['text'] == received_messages[-3]['message']['text']:
+            if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() and \
+               received_messages[-2]['message']['text'].lower() == received_messages[-3]['message']['text'].lower():
                 bot.sendMessage(chat, text)
         except KeyError:
             pass
@@ -203,7 +211,8 @@ def interaction(message):
                 bot.sendMessage(chat, 'Godo')
         except KeyError:
             pass
-
+        
+        lower_text = text.lower()
         # answer based on the text
         if 'russia' in text.lower():
             bot.sendMessage(chat, random.choice(russia))
@@ -275,6 +284,12 @@ def interaction(message):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Suca')
+        elif 'dimmi' in text.lower() and 'zuca' in text.lower():
+            bot.sendMessage(chat, random.choice(quotes))
+        elif 'zuca' in lower_text and '?' == lower_text[-1]:
+            dice_roll = random.randint(1, 3)
+            if dice_roll == 1:
+                bot.sendMessage(chat, random.choice(quotes))
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 30)
             if dice_roll < 5:
