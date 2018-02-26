@@ -65,7 +65,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           "Ca' Fosfati", 'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
-          'Grazie, Boutique Raphaelle!']
+          'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -84,7 +84,7 @@ personalized_messages = {
               'last_sent': []},
     'Frau': {'id': 38976241,
              'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
-                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi"],
+                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo'],
              'last_sent': []},
     'Mex': {'id': 0,
             'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
@@ -194,10 +194,10 @@ def interaction(message):
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 80)
-            if dice_roll == 1:
+            dice_roll = random.randint(1, 150)
+            if 1 <= dice_roll < 3:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 2 <= dice_roll < 5:
+            elif 3 <= dice_roll < 6:
                 send_personalized_message(message)
 
     except KeyError:
