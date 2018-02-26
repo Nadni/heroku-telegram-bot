@@ -132,6 +132,9 @@ personalized_messages = {
              'last_sent': []},
     'Seba': {'id': 25331042,
              'messages': ['Sebach'],
+             'last_sent': []},
+    'Miur': {'id': 0,
+             'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto'],
              'last_sent': []}}
 
 
@@ -248,6 +251,10 @@ def interaction(message):
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
+        elif 'merkel' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerata: buona')
         elif 'berlusconi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
