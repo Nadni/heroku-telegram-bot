@@ -236,7 +236,7 @@ def interaction(message):
         elif "perchè" in text.lower():
             bot.sendMessage(chat, '*perché')
         elif 'italia' in text.lower() or 'lo stivale' in text.lower():
-            dice_roll = random.randint(1, 2)
+            dice_roll = random.randint(1, 5)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Il paese che amk')
         elif 'ma ruffi' == text.lower() or 'ma luca' == text.lower():
