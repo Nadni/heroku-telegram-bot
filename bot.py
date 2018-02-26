@@ -251,7 +251,7 @@ def interaction(message):
                 bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
                                                      "L'unica cosa che fa ridere è la tua vita"]))
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 17)
+            dice_roll = random.randint(1, 100)
             if dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
             elif 4 <= dice_roll < 6:
