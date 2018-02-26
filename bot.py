@@ -175,25 +175,29 @@ def interaction(message):
         elif 'frau' in text.lower():
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'ebreo')
+                bot.sendMessage(chat, 'Ebreo')
         elif 'scherzo' in text.lower():
             bot.sendMessage(chat, 'Sei un grande')
         elif 'italia' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Il paese che amk')
+        elif 'togli zuca' in text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Stai buono')
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 16)
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 2 <= dice_roll <= 4:
+            elif 2 <= dice_roll < 5:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
             dice_roll = random.randint(1, 80)
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(quotes))
-            elif 2 <= dice_roll <= 4:
+            elif 2 <= dice_roll < 5:
                 send_personalized_message(message)
 
     except KeyError:
