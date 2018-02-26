@@ -178,6 +178,12 @@ def interaction(message):
                 bot.sendMessage(chat, 'Ebreo')
         elif 'scherzo' in text.lower():
             bot.sendMessage(chat, 'Sei un grande')
+        elif 'é' in text.lower() and 'perché' not in text.lower():
+            bot.sendMessage(chat, '*è')
+        elif "qual'è" in text.lower():
+            bot.sendMessage(chat, '*qual è')
+        elif "perchè" in text.lower():
+            bot.sendMessage(chat, '*perché')
         elif 'italia' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
@@ -186,6 +192,28 @@ def interaction(message):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Stai buono')
+        elif 'salvini' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerato: cattivo')
+        elif 'berlusconi' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerato: cattivo')
+        elif 'renzi' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerato: buono')
+        elif 'boldrini' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, random.choice(['Considerata: buona',
+                                                     'Ceva cosa ne pensi della Boldrini?']))
+        elif 'bebe' in text.lower() and 'vio' in text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, random.choice(['Sì, ma con le protesi',
+                                                     'Sì, ma senza protesi']))
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 16)
             if dice_roll == 1:
