@@ -94,7 +94,7 @@ def interaction(message):
         pass
 
 
-# infinite loop
+# main loop
 while True:
     # repeats the loop every 3 seconds
     time.sleep(3)
