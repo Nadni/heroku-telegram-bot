@@ -57,10 +57,10 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
           "Trabbi\nCosa ne pensi di NCIS 9x10?", "Leonardo\nCosa ne pensi dei credenti?",
           "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma Ruffi\nDormivi?",
-          "Dio can frau", "Frocia", "Nico Ago sei merda con bisturi", "Ca' Fosfati",
+          "Dio can frau", "Frocia", "Nico Ago merda con bisturi", "Ca' Fosfati", 'Ospe\ndale'
           "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
           "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè Leonardo", "Vali meno del trofeo TIM",
-          "Vali meno di Papi", "Frau sei Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
+          "Vali meno di Papi", "Frau Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
           "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
           "Nico Ago\nVali meno del cestino degli scarti ospedalieri", "Porco dio vali meno della carta del prosciutto",
           "Dio can persa anche questa al fanta", "Leonardo\nSecondo te l'economia è una scienza?",
@@ -70,7 +70,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
-          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
+          'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
           'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi']
 
@@ -91,25 +91,26 @@ personalized_messages = {
               'last_sent': []},
     'Frau': {'id': 38976241,
              'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
-                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo',
-                          'Frau sei Enrico Papi'],
+                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo', 'Ospe\ndale'
+                          'Frau sei Enrico Papi', "Frau cosa ci fai qua? Non è il giorno dell'umido"],
              'last_sent': []},
     'Mex': {'id': 54573695,
             'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
                          "Massimo\nCosa significa per te avere successo?"],
             'last_sent': []},
     'Fora': {'id': 80692823,
-             'messages': ["Frocia"],
+             'messages': ["Frocia", 'Başakbanchi'],
              'last_sent': []},
     'Luca': {'id': 24510037,
-             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?'],
+             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
              'last_sent': []},
     'Gigi': {'id': 308878806,
              'messages': ["Grande Gigi"],
              'last_sent': []},
     'Nico Ago': {'id': 0,
                  'messages': ["Nico Ago sei merda con bisturi", 'Non come qualcun altro Agostini',
-                              "Nico Ago\nVali meno del cestino degli scarti ospedalieri"],
+                              "Nico Ago\nVali meno del cestino degli scarti ospedalieri",
+                              "Agostini cosa ci fai qua? Non è il giorno dell'umido"],
                  'last_sent': []},
     'Trabucco': {'id': 0,
                  'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"],
@@ -123,10 +124,13 @@ personalized_messages = {
                            'Non come qualcun altro Agostini'],
               'last_sent': []},
     'Cevallos': {'id': 1168808856,
-                 'messages': ['Dio can Ceva'],
+                 'messages': ['Dio can Ceva', 'Occhiale o non occhiale?'],
                  'last_sent': []},
     'Zuca': {'id': 323998218,
-             'messages': ['Nadali, togli Zuca'],
+             'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo'],
+             'last_sent': []},
+    'Seba': {'id': 25331042,
+             'messages': ['Sebach'],
              'last_sent': []}}
 
 
@@ -187,6 +191,18 @@ def interaction(message):
                 bot.sendMessage(chat, text)
         except KeyError:
             pass
+        try:
+            if received_messages[-1]['message']['text'].lower() == 'vero' and \
+               received_messages[-2]['message']['text'].lower() == 'vero':
+                bot.sendMessage(chat, 'Vero')
+        except KeyError:
+            pass
+        try:
+            if received_messages[-1]['message']['text'].lower() == 'godo' and \
+               received_messages[-2]['message']['text'].lower() == 'godo':
+                bot.sendMessage(chat, 'Godo')
+        except KeyError:
+            pass
 
         # answer based on the text
         if 'russia' in text.lower():
@@ -207,10 +223,14 @@ def interaction(message):
             bot.sendMessage(chat, '*qual è')
         elif "perchè" in text.lower():
             bot.sendMessage(chat, '*perché')
-        elif 'italia' in text.lower():
+        elif 'italia' in text.lower() or 'lo stivale' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Il paese che amk')
+        elif 'ma ruffi' == text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Dormivi?')
         elif 'togli zuca' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
@@ -249,13 +269,14 @@ def interaction(message):
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
-                                                     "L'unica cosa che fa ridere è la tua vita"]))
+                                                     "L'unica cosa che fa ridere è la tua vita",
+                                                     'Ridi ridi\ncoglione']))
         elif 'eh?' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Suca')
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 70)
+            dice_roll = random.randint(1, 30)
             if dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
             elif 5 <= dice_roll < 6:
