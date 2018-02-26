@@ -83,15 +83,17 @@ def send_personalized_message(message):
 
     # checks if the user who sent the message is in the dictionary "personalized_messages"
     personalized = False
+    reply_to = ''
     for user in personalized_messages:
         if personalized_messages[user]['id'] == message['from']['id']:
             personalized = True
+            reply_to = user
 
     # if the user is not in the dictionary, just send a random message, otherwise choose appropriately
     if personalized is False:
         bot.sendMessage(last_user, random.choice(quotes))
     else:
-        bot.sendMessage(last_user, '-ZucaBot-')
+        bot.sendMessage(last_user, random.choice(personalized_messages[reply_to]['messages']))
 
 
 # this is the function that will be called every time ZucaBot receives a new message
@@ -122,9 +124,11 @@ def interaction(message):
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 5)
+            dice_roll = random.randint(1, 8)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
+            elif 2 <= dice_roll <= 4:
+                send_personalized_message(message)
 
     except KeyError:
         pass
