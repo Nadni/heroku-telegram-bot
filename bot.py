@@ -57,9 +57,9 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
           "Trabbi\nCosa ne pensi di NCIS 9x10?", "Leonardo\nCosa ne pensi dei credenti?",
           "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma Ruffi\nDormivi?",
-          "Dio can frau", "Frocia", "Nico Ago merda con bisturi", "Ca' Fosfati", 'Ospe\ndale'
+          "Dio can frau", "Frocia", "Nico Ago merda con bisturi", "Ca' Fosfati", 'Ospe\ndale',
           "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
-          "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè Leonardo", "Vali meno del trofeo TIM",
+          "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè", "Vali meno del trofeo TIM",
           "Vali meno di Papi", "Frau Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
           "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
           "Nico Ago\nVali meno del cestino degli scarti ospedalieri", "Porco dio vali meno della carta del prosciutto",
@@ -72,9 +72,9 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
-          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi'
+          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
-          'Nadali fammi entrare nella Sadness']
+          'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -101,7 +101,7 @@ personalized_messages = {
                          "Massimo\nCosa significa per te avere successo?"],
             'last_sent': []},
     'Fora': {'id': 80692823,
-             'messages': ["Frocia", 'Başakbanchi'],
+             'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo'],
              'last_sent': []},
     'Luca': {'id': 24510037,
              'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
@@ -135,7 +135,8 @@ personalized_messages = {
              'messages': ['Sebach'],
              'last_sent': []},
     'Miur': {'id': 0,
-             'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto'],
+             'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
+                          'No porno Miur'],
              'last_sent': []}}
 
 
@@ -265,7 +266,7 @@ def interaction(message):
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
-        elif 'erdogan' in text.lower() or 'tayyip':
+        elif 'erdogan' in text.lower() or 'tayyip' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
