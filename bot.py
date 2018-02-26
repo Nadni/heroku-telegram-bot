@@ -124,7 +124,6 @@ def send_personalized_message(message):
 
         # checks if the chosen message has already been sent recently to that user
         while output_message in personalized_messages[reply_to]['last_sent']:
-            print('xiao')
             output_message = random.choice(personalized_messages[reply_to]['messages'])
 
         # updates 'last_sent' to only keep the last messages
@@ -184,10 +183,10 @@ for message in received_messages:
 while True:
     # repeats the loop every 1 seconds
     time.sleep(1)
-    print('eccomi')
 
     # variable that stores most recent messages
-    received_messages = [x for x in bot.getUpdates(offset=offset)]
+    # received_messages = [x for x in bot.getUpdates(offset=offset)]
+    received_messages = [x for x in bot.getUpdates()]
     print(received_messages[-1])
 
     # saves the ID of the user who wrote the last message
@@ -197,6 +196,7 @@ while True:
 
     # checks if ZucaBot received a new message
     if new_message != previous_message:
+        print('NEW MESSAGE RECEIVED')
 
         # interacts
         interaction(received_messages[-1]['message'])
