@@ -8,7 +8,13 @@ import datetime
 # bot initialisation
 token = os.environ['TOKEN']
 bot = telepot.Bot(token)
-received_messages = [x for x in bot.getUpdates()]
+received_messages = []
+for x in bot.getUpdates():
+    try:
+        check = x['message']
+        received_messages.append(x)
+    except KeyError:
+        pass
 messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
@@ -173,7 +179,7 @@ def interaction(message):
     # try to see if the received message contains any text, if so interacts, otherwise do nothing
     try:
         text = message['text']
-        
+
         # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
         try:
             if received_messages[-1]['message']['text'] == received_messages[-2]['message']['text'] and \
@@ -265,6 +271,7 @@ def interaction(message):
 x = [print() for _ in range(10)]
 for message in received_messages:
     print('\n\n\n\n\n\n\n\n\n\n')
+    print(message)
     for key in message['message']:
         print(key)
         print(message['message'][key])
