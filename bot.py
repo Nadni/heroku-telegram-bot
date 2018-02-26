@@ -120,7 +120,7 @@ def interaction(message):
             dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 bot.sendMessage(last_user, random.choice(quotes))
-            elif 2 <= dice_roll <= 4:
+            elif 2 <= dice_roll <= 3:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
