@@ -91,9 +91,19 @@ def send_personalized_message(message):
 
     # if the user is not in the dictionary, just send a random message, otherwise choose appropriately
     if personalized is False:
-        bot.sendMessage(last_user, random.choice(quotes))
+        output_message = random.choice(quotes)
     else:
-        bot.sendMessage(last_user, random.choice(personalized_messages[reply_to]['messages']))
+        output_message = random.choice(personalized_messages[reply_to]['messages'])
+        
+        # checks if the chosen message has already been sent recently to that user
+        while output_message in personalized_messages[reply_to]['last_sent']:
+            output_message = random.choice(personalized_messages[reply_to]['messages'])
+        
+        # updates 'last_sent' to only keep the last messages
+        personalized_messages[reply_to]['last_sent'].append(output_message)
+        personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
+
+    bot.sendMessage(last_user, output_message)
 
 
 # this is the function that will be called every time ZucaBot receives a new message
