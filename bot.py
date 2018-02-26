@@ -211,7 +211,7 @@ def interaction(message):
                 bot.sendMessage(chat, 'Godo')
         except KeyError:
             pass
-        
+
         lower_text = text.lower()
         # answer based on the text
         if 'russia' in text.lower():
@@ -236,7 +236,7 @@ def interaction(message):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Il paese che amk')
-        elif 'ma ruffi' == text.lower():
+        elif 'ma ruffi' == text.lower() or 'ma luca' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Dormivi?')
@@ -249,6 +249,10 @@ def interaction(message):
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
         elif 'berlusconi' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Considerato: cattivo')
+        elif 'trump' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 bot.sendMessage(chat, 'Considerato: cattivo')
