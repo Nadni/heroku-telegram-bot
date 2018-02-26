@@ -258,7 +258,7 @@ def interaction(message):
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 400)
+            dice_roll = random.randint(1, 1000)
             if 1 <= dice_roll < 5:
                 bot.sendMessage(chat, random.choice(quotes))
             elif 5 <= dice_roll < 7:
