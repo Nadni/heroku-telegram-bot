@@ -58,7 +58,9 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Porci ma quando esce articolo di ultimo uomo su Akinfeev?", "Stai buono", "Stai fermo",
           "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Yoses comunista che vota Monti',
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
-          'È sempre il solito teatrino']
+          'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
+          'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
+          "Ca' Fosfati", 'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -69,7 +71,8 @@ personalized_messages = {
               'last_sent': []},
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo",
-                         "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca'],
+                         "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0'],
             'last_sent': []},
     'Beppe': {'id': 20344105,
               'messages': ["Rozzi"],
@@ -86,7 +89,7 @@ personalized_messages = {
              'messages': ["Frocia"],
              'last_sent': []},
     'Luca': {'id': 24510037,
-             'messages': ["Ma Ruffi\nDormivi?"],
+             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?'],
              'last_sent': []},
     'Gigi': {'id': 308878806,
              'messages': ["Grande Gigi"],
