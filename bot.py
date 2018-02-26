@@ -72,8 +72,9 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
-          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi',
-          'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?']
+          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi'
+          'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
+          'Nadali fammi entrare nella Sadness']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -288,7 +289,8 @@ def interaction(message):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 bot.sendMessage(chat, random.choice(['Sì, ma con le protesi',
-                                                     'Sì, ma senza protesi']))
+                                                     'Sì, ma senza protesi',
+                                                     'Con o senza protesi?']))
         elif 'hahaha' in text.lower() or 'ahhah' in text.lower() or 'rido' == text.lower():
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
