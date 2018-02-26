@@ -185,8 +185,7 @@ while True:
     time.sleep(1)
 
     # variable that stores most recent messages
-    # received_messages = [x for x in bot.getUpdates(offset=offset)]
-    received_messages = [x for x in bot.getUpdates()]
+    received_messages = [x for x in bot.getUpdates(offset=offset)]
     print(received_messages[-1])
 
     # saves the ID of the user who wrote the last message
@@ -210,6 +209,6 @@ while True:
 
         # discards the last message and gets ready to receive a new one
         previous_message = new_message
-        offset = received_messages[-1]['update_id'] - 10000  # only sees the last 10000 messages
+        offset = received_messages[-1]['update_id'] - 50  # only sees the last 50 messages
         if offset < 0:
             offset = 1
