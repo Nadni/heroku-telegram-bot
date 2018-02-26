@@ -3,12 +3,16 @@ import telepot
 import time
 import os
 import random
+import datetime
 
 # bot initialisation
 token = os.environ['TOKEN']
 bot = telepot.Bot(token)
 received_messages = [x for x in bot.getUpdates()]
+messages_num = len(received_messages)
+print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
+disservizi = -243280032
 offset = 0
 
 russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Ryazan",
@@ -51,7 +55,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
           "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè Leonardo", "Vali meno del trofeo TIM",
           "Vali meno di Papi", "Frau sei Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
-          "7.54 qualcuno?", "Ma che cazzo vuoi\nFallito di merda",
+          "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
           "Nico Ago\nVali meno del cestino degli scarti ospedalieri", "Porco dio vali meno della carta del prosciutto",
           "Dio can persa anche questa al fanta", "Leonardo\nSecondo te l'economia è una scienza?",
           "Yoses\nPensi di essere comunista?", "Frau che fa tesi sui pedalò",
@@ -60,7 +64,8 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
-          "Ca' Fosfati", 'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana']
+          "Ca' Fosfati", 'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana',
+          'Grazie, Boutique Raphaelle!']
 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
@@ -105,8 +110,24 @@ personalized_messages = {
                 'messages': ["Grande André\nHai ficcato?"],
                 'last_sent': []},
     'Yoses': {'id': 0,
-              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti'],
-              'last_sent': []}}
+              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti',
+                           'Ma Yoses, sei stupido?', 'AAA cercasi coerenza'],
+              'last_sent': []},
+    'Cevallos': {'id': 1168808856,
+                 'messages': ['Dio can Ceva'],
+                 'last_sent': []},
+    'Zuca': {'id': 323998218,
+             'messages': ['Nadali, togli Zuca'],
+             'last_sent': []}}
+
+
+# checks if 'x' is within 'start' and 'end', used to see if it's time for the LateShow
+def is_time_in_range(start, end, x):
+    # true if x is in range
+    if start <= end:
+        return start <= x <= end
+    else:
+        return start <= x or x <= end
 
 
 # this function is used to send a personalised message
@@ -134,7 +155,7 @@ def send_personalized_message(message):
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
 
-    bot.sendMessage(last_user, output_message)
+    bot.sendMessage(chat, output_message)
 
 
 # this is the function that will be called every time ZucaBot receives a new message
@@ -146,28 +167,32 @@ def interaction(message):
 
         # answer based on the text
         if 'russia' in text.lower():
-            bot.sendMessage(last_user, random.choice(russia))
+            bot.sendMessage(chat, random.choice(russia))
         elif 'massimone' in text.lower():
-            bot.sendMessage(last_user, 'Papirone')
+            bot.sendMessage(chat, 'Papirone')
         elif 'papirone' in text.lower():
-            bot.sendMessage(last_user, 'Massimone')
+            bot.sendMessage(chat, 'Massimone')
         elif 'frau' in text.lower():
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
-                bot.sendMessage(last_user, 'ebreo')
+                bot.sendMessage(chat, 'ebreo')
         elif 'scherzo' in text.lower():
-            bot.sendMessage(last_user, 'Sei un grande')
+            bot.sendMessage(chat, 'Sei un grande')
+        elif 'italia' in text.lower():
+            dice_roll = random.randint(1, 2)
+            if dice_roll == 1:
+                bot.sendMessage(chat, 'Il paese che amk')
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 16)
             if dice_roll == 1:
-                bot.sendMessage(last_user, random.choice(quotes))
+                bot.sendMessage(chat, random.choice(quotes))
             elif 2 <= dice_roll <= 4:
                 send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
             dice_roll = random.randint(1, 80)
             if dice_roll == 1:
-                bot.sendMessage(last_user, random.choice(quotes))
+                bot.sendMessage(chat, random.choice(quotes))
             elif 2 <= dice_roll <= 4:
                 send_personalized_message(message)
 
@@ -186,16 +211,32 @@ for message in received_messages:
 # main loop
 while True:
     # repeats the loop every 1 seconds
-    time.sleep(1)
+    loop_cycle = 1  # number of seconds between loops
+    time.sleep(loop_cycle)
 
     # variable that stores most recent messages
     received_messages = [x for x in bot.getUpdates(offset=offset)]
     print(received_messages[-1])
 
-    # saves the ID of the user who wrote the last message
-    last_user = received_messages[-1]['message']['chat']['id']
+    # saves the ID of the chat who wrote the last message
+    chat = received_messages[-1]['message']['chat']['id']
     # saves the ID of the last message
     new_message = received_messages[-1]['update_id']
+
+    # if it's late in the night, has a small chance to ask 'Chi late?'
+    start = datetime.time(1, 0, 0)
+    end = datetime.time(3, 0, 0)
+    if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
+        dice_roll = random.randint(1, 14.400/loop_cycle)
+        if dice_roll == 1:
+            bot.sendMessage(disservizi, 'Chi Late?')
+    # if it's early in the morning, has a small chance to ask '7.54 qualcuno?'
+    start = datetime.time(6, 30, 0)
+    end = datetime.time(7, 30, 0)
+    if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
+        dice_roll = random.randint(1, 14.400/loop_cycle)
+        if dice_roll == 1:
+            bot.sendMessage(disservizi, '7.54 qualcuno?')
 
     # checks if ZucaBot received a new message
     if new_message != previous_message:
