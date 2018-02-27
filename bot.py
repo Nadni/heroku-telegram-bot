@@ -6,7 +6,7 @@ import random
 import datetime
 
 # bot initialisation
-token = os.environ['TOKEN']
+token = os.environ['ZUCABOT_TOKEN']
 bot = telepot.Bot(token)
 received_messages = []
 for x in bot.getUpdates():
@@ -19,6 +19,9 @@ messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
 disservizi = -243280032
+leonardo = 24030913
+progetto_zucabot = -171074079
+test_group = -307834730
 offset = 0
 
 russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Ryazan",
@@ -71,8 +74,8 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
-          'Grazie, Boutique Raphaelle!', 'Considerato: buono', 'Considerato: cattivo',
-          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi',
+          'Grazie, Boutique Raphaelle!', 'Considerato: \nbuono', 'Considerato: \ncattivo',
+          'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi', 'Nadali rimetti Porci',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
           'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo']
 
@@ -129,14 +132,14 @@ personalized_messages = {
                  'messages': ['Dio can Ceva', 'Occhiale o non occhiale?'],
                  'last_sent': []},
     'Zuca': {'id': 323998218,
-             'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo'],
+             'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo', 'Nadali hai aggiunto nuove frasi a Zuca?'],
              'last_sent': []},
     'Seba': {'id': 25331042,
-             'messages': ['Sebach'],
+             'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
              'last_sent': []},
     'Miur': {'id': 0,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
-                          'No porno Miur'],
+                          'No porno Miur', 'La mamma dei Miur è sempre incinta'],
              'last_sent': []}}
 
 
@@ -166,32 +169,41 @@ def send_personalized_message(message):
     else:
         output_message = random.choice(personalized_messages[reply_to]['messages'])
 
-        # checks if the chosen message has already been sent recently to that user
+        # checks if the chosen message has already been sent recently to that user, if so chooses another one
         while output_message in personalized_messages[reply_to]['last_sent']:
-            output_message = random.choice(personalized_messages[reply_to]['messages'])
+            if set(personalized_messages[reply_to]['messages']) <= set(personalized_messages[reply_to]['last_sent']):
+                output_message = random.choice(quotes)
+            else:
+                # selects either a quote from the general list or one from the personal list
+                dice_roll = random.random()
+                if dice_roll < 60:
+                    output_message = random.choice(personalized_messages[reply_to]['messages'])
+                else:
+                    output_message = random.choice(quotes)
 
         # updates 'last_sent' to only keep the last messages
         personalized_messages[reply_to]['last_sent'].append(output_message)
-        personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-4:]
+        personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-5:]
 
     # in some cases, based on who ZucaBot is replying to, sends special messages
+    text = message['text'].lower()
     if reply_to == 'Zuca':
         # has a random chance to just repeat what Zuca said
         dice_roll = random.randint(1, 5)
         if dice_roll < 4:
             output_message = message['text']
     if reply_to == 'Leo':
-        text = message['text'].lower()
         if text[-1] == '?':
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 output_message = 'Forse dovresti chiederlo a un costituzionalista'
 
-    bot.sendMessage(chat, output_message)
+    return output_message
 
 
 # this is the function that will be called every time ZucaBot receives a new message
 def interaction(message):
+    output_message = ''
 
     # try to see if the received message contains any text, if so interacts, otherwise do nothing
     try:
@@ -220,112 +232,127 @@ def interaction(message):
         lower_text = text.lower()
         # answer based on the text
         if 'russia' in text.lower():
-            bot.sendMessage(chat, random.choice(russia))
+            output_message = random.choice(russia)
         elif 'massimone' in text.lower():
-            bot.sendMessage(chat, 'Papirone')
+            output_message = 'Papirone'
         elif 'papirone' in text.lower():
-            bot.sendMessage(chat, 'Massimone')
+            output_message = 'Massimone'
         elif 'frau' in text.lower():
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Ebreo')
-        elif 'scherzo' in text.lower():
-            bot.sendMessage(chat, 'Sei un grande')
+                output_message = 'Ebreo'
+        elif 'scherzo' == text.lower():
+            output_message = 'Sei un grande'
         elif 'é' in text.lower() and 'perché' not in text.lower() and\
                 'né' not in text.lower() and 'sé' not in text.lower():
-            bot.sendMessage(chat, '*è')
+            output_message = '*è'
+        elif 'sè' in text.lower():
+            output_message = '*sé'
+        elif 'dò' in text.lower():
+            output_message = '*do'
         elif "qual'è" in text.lower():
-            bot.sendMessage(chat, '*qual è')
+            output_message = '*qual è'
         elif "perchè" in text.lower():
-            bot.sendMessage(chat, '*perché')
+            output_message = '*perché'
         elif 'italia' in text.lower() or 'lo stivale' in text.lower():
             dice_roll = random.randint(1, 5)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Il paese che amk')
+                output_message = 'Il paese che amk'
         elif 'ma ruffi' == text.lower() or 'ma luca' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Dormivi?')
+                output_message = 'Dormivi?'
         elif 'togli zuca' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Stai buono')
+                output_message = 'Stai buono'
+        elif 'madre' in text or 'mamma' in text:
+            if message['from']['id'] == personalized_messages['Miur']['id']:
+                dice_roll = random.random()
+                if dice_roll < 0.5:
+                    output_message = random.choice(['Nuova questa Miur!',
+                                                    'Miur, è dalla terza media che non fa ridere',
+                                                    'La mamma dei Miur è sempre incinta'])
         elif 'salvini' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerato: cattivo')
+                output_message = 'considerato: cattivo'
         elif 'merkel' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerata: buona')
+                output_message = 'Considerata: buona'
         elif 'berlusconi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerato: cattivo')
+                output_message = 'Considerato: cattivo'
+        elif 'mussolini' in text.lower() or 'duce' in text.lower() or \
+                        'ducie' in text.lower() or 'dux' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                output_message = 'Considerato: cattivo'
         elif 'trump' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerato: cattivo')
+                output_message = 'considerato: \ncattivo'
         elif 'erdogan' in text.lower() or 'tayyip' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerato: cattivo')
+                output_message = 'Considerato : \ncattivo'
         elif 'renzi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Considerato: buono')
+                output_message = 'Considerato: buono'
         elif "ca" in text.lower() and "foscari" in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, "Ca' Fosfati")
+                output_message = "Ca' Fosfati"
         elif 'zuca, sei' in text.lower() or 'zuca sei' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, "Ma che cazzo vuoi\nFallito di merda")
+                output_message = "Ma che cazzo vuoi\nFallito di merda"
         elif 'boldrini' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                bot.sendMessage(chat, random.choice(['Considerata: buona',
-                                                     'Ceva cosa ne pensi della Boldrini?']))
+                output_message = random.choice(['Considerata: buona',
+                                                'Ceva cosa ne pensi della Boldrini?'])
         elif 'bebe' in text.lower() and 'vio' in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, random.choice(['Sì, ma con le protesi',
-                                                     'Sì, ma senza protesi',
-                                                     'Con o senza protesi?']))
+                output_message = random.choice(['Sì, ma con le protesi',
+                                                'Sì, ma senza protesi',
+                                                'Con o senza protesi?'])
         elif 'hahaha' in text.lower() or 'ahhah' in text.lower() or 'rido' == text.lower():
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
-                bot.sendMessage(chat, random.choice(['Ma cosa ridi deficiente?',
-                                                     "L'unica cosa che fa ridere è la tua vita",
-                                                     'Ridi ridi\ncoglione',
-                                                     'Non fa ridere, idiota',
-                                                     'Ridi perché ti sei guardato allo specchio?']))
+                output_message = random.choice(['Ma cosa ridi deficiente?',
+                                                "L'unica cosa che fa ridere è la tua vita",
+                                                'Ridi ridi\ncoglione',
+                                                'Non fa ridere, idiota',
+                                                'Ridi perché ti sei guardato allo specchio?'])
         elif 'eh?' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
-                bot.sendMessage(chat, 'Suca')
+                output_message = 'Suca'
         elif 'dimmi' in text.lower() and 'zuca' in text.lower():
-            bot.sendMessage(chat, random.choice(quotes))
+            output_message = random.choice(quotes)
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
-            bot.sendMessage(chat, random.choice(quotes))
+            output_message = random.choice(quotes)
         elif 'zuca' in lower_text and '?' == lower_text[-1]:
             dice_roll = random.randint(1, 3)
             if dice_roll == 1:
-                bot.sendMessage(chat, random.choice(quotes))
+                output_message = random.choice(quotes)
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 30)
-            if dice_roll < 5:
-                bot.sendMessage(chat, random.choice(quotes))
-            elif 5 <= dice_roll < 6:
-                send_personalized_message(message)
+            dice_roll = random.randint(1, 10)
+            if dice_roll == 1:
+                output_message = send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 1000)
-            if 1 <= dice_roll < 5:
-                bot.sendMessage(chat, random.choice(quotes))
-            elif 5 <= dice_roll < 7:
-                send_personalized_message(message)
+            dice_roll = random.randint(1, 150)
+            if dice_roll == 1:
+                output_message = send_personalized_message(message)
+
+        if output_message != '':
+            bot.sendMessage(chat, output_message)
 
     except KeyError:
         pass
@@ -343,7 +370,7 @@ for message in received_messages:
 # main loop
 while True:
     # repeats the loop every 1 seconds
-    loop_cycle = 1  # number of seconds between loops
+    loop_cycle = 0.01  # number of seconds between loops
     time.sleep(loop_cycle)
 
     # variable that stores most recent messages
@@ -354,7 +381,6 @@ while True:
             received_messages.append(x)
         except KeyError:
             pass
-    print(received_messages[-1])
 
     # saves the ID of the chat who wrote the last message
     chat = received_messages[-1]['message']['chat']['id']
@@ -365,20 +391,19 @@ while True:
     start = datetime.time(1, 0, 0)
     end = datetime.time(3, 0, 0)
     if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, int(14.400/loop_cycle))
+        dice_roll = random.randint(1, int(14400/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, 'Chi Late?')
     # if it's early in the morning, has a small chance to ask '7.54 qualcuno?'
     start = datetime.time(6, 30, 0)
     end = datetime.time(7, 30, 0)
     if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, int(14.400/loop_cycle))
+        dice_roll = random.randint(1, int(14400/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, '7.54 qualcuno?')
 
     # checks if ZucaBot received a new message
     if new_message != previous_message:
-        print('NEW MESSAGE RECEIVED')
 
         # interacts
         interaction(received_messages[-1]['message'])
@@ -386,12 +411,13 @@ while True:
         # prints information on the received message
         x = [print() for _ in range(10)]
         print('\n\n\n\n\n\n\n\n\n\n')
+        print('NEW MESSAGE RECEIVED')
         for key in received_messages[-1]['message']:
             print(key)
             print('___________________', received_messages[-1]['message'][key])
 
         # discards the last message and gets ready to receive a new one
         previous_message = new_message
-        offset = received_messages[-1]['update_id'] - 50  # only sees the last 50 messages
+        offset = received_messages[-1]['update_id'] - 80  # only sees the last 80 messages
         if offset < 0:
             offset = 1
