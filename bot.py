@@ -123,10 +123,10 @@ personalized_messages = {
     'Marassi': {'id': 0,
                 'messages': ["Grande André\nHai ficcato?"],
                 'last_sent': []},
-    'Yoses': {'id': 0,
+    'Yoses': {'id': 62613803,
               'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti',
                            'Ma Yoses, sei stupido?', 'AAA cercasi coerenza',
-                           'Non come qualcun altro Agostini'],
+                           'Non come qualcun altro Agostini', "Yoses comunista con l'iphone"],
               'last_sent': []},
     'Cevallos': {'id': 1168808856,
                  'messages': ['Dio can Ceva', 'Occhiale o non occhiale?'],
@@ -242,7 +242,9 @@ def interaction(message):
             if dice_roll == 1:
                 output_message = 'Ebreo'
         elif 'scherzo' == text.lower():
-            output_message = 'Sei un grande'
+            dice_roll = random.randint(1, 3)
+            if dice_roll == 1:
+                output_message = 'Sei un grande'
         elif 'é' in text.lower() and 'perché' not in text.lower() and\
                 'né' not in text.lower() and 'sé' not in text.lower():
             output_message = '*è'
