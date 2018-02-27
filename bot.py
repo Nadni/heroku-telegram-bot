@@ -79,6 +79,22 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
           'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo']
 
+offese = ["Ma Ruffi\nDormivi?", "Nico Ago merda con bisturi", "Vali meno del calcio alle olimpiadi",
+          "Vali meno del trofeo TIM", "Vali meno di Papi", "Frau Amadeus", "Non vali nulla",
+          "Ma che cazzo vuoi\nFallito di merda", "Nico Ago\nVali meno del cestino degli scarti ospedalieri",
+          "Porco dio vali meno della carta del prosciutto", 'Yoses comunista che vota Monti', 
+          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Non come qualcun altro Agostini',
+          'Fora che per scopare deve andare in paesi del terzo mondo', "Frau sei Amadeus", 
+          "Frau che fa tesi sui pedalò", 'Frau ebreo', "Frau cosa ci fai qua? Non è il giorno dell'umido", 
+          "Nico Ago sei merda con bisturi", "Agostini cosa ci fai qua? Non è il giorno dell'umido", 
+          'Ma Yoses, sei stupido?', "Yoses comunista con l'iphone", 
+          'Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto']
+
+complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei credenti?", "Grande Gigi",
+               "Leonardo\nSecondo te l'economia è una scienza?", "Yoses\nPensi di essere comunista?",
+               'Non mi gasa ragazza puttana', 'Luca\nTi gasa ragazza puttana?', 'I <3 Sebach',
+               'La mamma dei Miur è sempre incinta']
+
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
 # 'last_sent' hold the last personalised messages that were to that person (to check for repetitions)
@@ -87,8 +103,9 @@ personalized_messages = {
               'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"],
               'last_sent': []},
     'Leo': {'id': 24030913,
-            'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo",
+            'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0', 
                          'Nadali, ti prego trovami le radici reali di x^2+1=0'],
             'last_sent': []},
     'Beppe': {'id': 20344105,
@@ -238,13 +255,17 @@ def interaction(message):
         elif 'papirone' in text.lower():
             output_message = 'Massimone'
         elif 'frau' in text.lower():
-            dice_roll = random.randint(1, 4)
+            dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 output_message = 'Ebreo'
         elif 'scherzo' == text.lower():
             dice_roll = random.randint(1, 3)
             if dice_roll == 1:
                 output_message = 'Sei un grande'
+        elif 'grande' == text.lower():
+            dice_roll = random.randint(1, 4)
+            if dice_roll == 1:
+                output_message = 'Sei uno scherzo'
         elif 'é' in text.lower() and 'perché' not in text.lower() and\
                 'né' not in text.lower() and 'sé' not in text.lower():
             output_message = '*è'
@@ -355,6 +376,13 @@ def interaction(message):
 
         if output_message != '':
             bot.sendMessage(chat, output_message)
+        # has a change to send a double message
+        dice_roll = random.random()
+        if dice_roll < 0.33:
+            if output_message in complimenti:
+                bot.sendMessage(chat, 'Serio, no sfottò')
+            elif output_message in offese:
+                bot.sendMessage(chat, 'Scherzo, sei un grande')
 
     except KeyError:
         pass
