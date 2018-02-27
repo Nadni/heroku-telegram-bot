@@ -23,6 +23,7 @@ leonardo = 24030913
 progetto_zucabot = -171074079
 test_group = -307834730
 offset = 0
+chain = ''
 
 russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Ryazan",
            "FC Akademiya Dimitrovgrad", "FC Akademiya Togliatti", "FC Alania-2 Vladikavkaz",
@@ -58,20 +59,17 @@ russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Rya
 
 quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei calcinacci",
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
-          "Trabbi\nCosa ne pensi di NCIS 9x10?", "Leonardo\nCosa ne pensi dei credenti?",
-          "Sto andando a fare ripe", "Dio can", "Grande André\nHai ficcato?", "Ma Ruffi\nDormivi?",
+          "Trabbi\nCosa ne pensi di NCIS 9x10?", "Sto andando a fare ripe", "Dio can",
           "Dio can frau", "Frocia", "Nico Ago merda con bisturi", "Ca' Fosfati", 'Ospe\ndale',
-          "Massimo\nPensi di aver raggiunto il successo nella vita?", "Massimo\nCosa significa per te avere successo?",
-          "Grande Gigi", "Vali meno del calcio alle olimpiadi", "Vabbè", "Vali meno del trofeo TIM",
+          "Vali meno del calcio alle olimpiadi", "Vabbè", "Vali meno del trofeo TIM",
           "Vali meno di Papi", "Frau Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
           "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
-          "Nico Ago\nVali meno del cestino degli scarti ospedalieri", "Porco dio vali meno della carta del prosciutto",
-          "Dio can persa anche questa al fanta", "Leonardo\nSecondo te l'economia è una scienza?",
-          "Yoses\nPensi di essere comunista?", "Frau che fa tesi sui pedalò", 'Rimettere Borto',
-          "Porci ma quando esce articolo di ultimo uomo su Akinfeev?", "Stai buono", "Stai fermo",
-          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Yoses comunista che vota Monti',
-          'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can', 'È sempre il solito teatrino',
-          'È sempre il solito teatrino', 'Nadali, ti prego trovami le radici reali di x^2+1=0',
+          "Porco dio vali meno della carta del prosciutto", "Dio can persa anche questa al fanta",
+          "Frau che fa tesi sui pedalò", 'Rimettere Borto', "Porci ma quando esce articolo di ultimo uomo su Akinfeev?",
+          "Stai buono", "Stai fermo", "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi",
+          'Yoses comunista che vota Monti', 'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can',
+          'È sempre il solito teatrino', 'È sempre il solito teatrino',
+          'Nadali, ti prego trovami le radici reali di x^2+1=0',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: \nbuono', 'Considerato: \ncattivo',
@@ -105,7 +103,7 @@ personalized_messages = {
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
-                         'Nadali, ti prego trovami le radici reali di x^2+1=0',
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo'
                          'Nadali, ti prego trovami le radici reali di x^2+1=0'],
             'last_sent': []},
     'Beppe': {'id': 20344105,
@@ -121,7 +119,8 @@ personalized_messages = {
                          "Massimo\nCosa significa per te avere successo?"],
             'last_sent': []},
     'Fora': {'id': 80692823,
-             'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo'],
+             'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo',
+                          'Frociadori'],
              'last_sent': []},
     'Luca': {'id': 24510037,
              'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
@@ -137,7 +136,7 @@ personalized_messages = {
     'Trabucco': {'id': 0,
                  'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"],
                  'last_sent': []},
-    'Marassi': {'id': 0,
+    'Marassi': {'id': 129705113,
                 'messages': ["Grande André\nHai ficcato?"],
                 'last_sent': []},
     'Yoses': {'id': 62613803,
@@ -157,7 +156,10 @@ personalized_messages = {
     'Miur': {'id': 0,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
                           'No porno Miur', 'La mamma dei Miur è sempre incinta'],
-             'last_sent': []}}
+             'last_sent': []},
+    'Immaginary_bot': {'id': 25331042,
+                       'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
+                       'last_sent': []}}
 
 
 # checks if 'x' is within 'start' and 'end', used to see if it's time for the LateShow
@@ -226,23 +228,17 @@ def interaction(message):
     try:
         text = message['text']
 
-        # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
         try:
+            # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
             if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() and \
                received_messages[-2]['message']['text'].lower() == received_messages[-3]['message']['text'].lower():
-                bot.sendMessage(chat, text)
-        except KeyError:
-            pass
-        try:
-            if received_messages[-1]['message']['text'].lower() == 'vero' and \
-               received_messages[-2]['message']['text'].lower() == 'vero':
-                bot.sendMessage(chat, 'Vero')
-        except KeyError:
-            pass
-        try:
-            if received_messages[-1]['message']['text'].lower() == 'godo' and \
-               received_messages[-2]['message']['text'].lower() == 'godo':
-                bot.sendMessage(chat, 'Godo')
+                # checks if the last 3 messages were from different people
+                if received_messages[-1]['from']['id'] != received_messages[-2]['from']['id'] and \
+                   received_messages[-2]['from']['id'] != received_messages[-3]['from']['id']:
+                    # checks if ZucaBot already partecipated in that chain
+                    if text != chain:
+                        bot.sendMessage(chat, text)
+                        current_chain = text
         except KeyError:
             pass
 
@@ -266,7 +262,7 @@ def interaction(message):
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
                 output_message = 'Sei uno scherzo'
-        elif 'é' in text.lower() and 'perché' not in text.lower() and\
+        elif 'é' in text.lower() and 'ché' not in text.lower() and\
                 'né' not in text.lower() and 'sé' not in text.lower():
             output_message = '*è'
         elif 'sè' in text.lower():
@@ -361,12 +357,12 @@ def interaction(message):
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
             output_message = random.choice(quotes)
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 10)
+            dice_roll = random.randint(1, 7)
             if dice_roll == 1:
                 output_message = send_personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 150)
+            dice_roll = random.randint(1, 60)
             if dice_roll == 1:
                 output_message = send_personalized_message(message)
 
