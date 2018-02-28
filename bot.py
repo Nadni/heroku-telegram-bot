@@ -79,7 +79,8 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Grazie, Boutique Raphaelle!', 'Considerato: \nbuono', 'Considerato: \ncattivo',
           'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi', 'Nadali rimetti Porci',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
-          'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo']
+          'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo',
+          'Fini unico vero politico']
 
 offese = ["Ma Ruffi\nDormivi?", "Nico Ago merda con bisturi", "Vali meno del calcio alle olimpiadi",
           "Vali meno del trofeo TIM", "Vali meno di Papi", "Frau Amadeus", "Non vali nulla",
@@ -110,7 +111,7 @@ personalized_messages = {
                          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo',
                          'Leonardino Fuffolo', 'Nadali togli Zuca',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0'],
-            'last_sent': []},
+            'last_sent': ["Leonardo\nCosa ne pensi dei credenti?", "Leonardo\nSecondo te l'economia è una scienza?"]},
     'Beppe': {'id': 20344105,
               'messages': ["Rozzi"],
               'last_sent': []},
@@ -242,25 +243,22 @@ def time_based_messages(datetime_of_last_message, clock, chat):
             send_message(output_message, chat)
 
 
-# this function is used to choose a personalized message
-def personalized_message(input_message, author):
-    print(author)
-    print('personalizing')
-
-    # checks if the user who sent the message is in the dictionary "personalized_messages"
+# this function is used to choose a personalized message. "probability" is the % probability of a
+# personalized message, from 0 to 100
+def personalized_message(input_message, author, probability=50):
     personalized = False
     reply_to = ''
 
+    # checks if the user who sent the message is in the dictionary "personalized_messages"
     for user in personalized_messages:
         if personalized_messages[user]['id'] == author:
-        # if True:
+            # if True:
             personalized = True
             reply_to = user
 
-    print('ci siamo?')
-    print(reply_to)
-    print(personalized)
-    print()
+    dice_roll = random.randint(1, 100)
+    if dice_roll > probability:
+        personalized = False
 
     # if the user is not in the dictionary, or it has no associated messages, just send a random message.
     # Otherwise choose appropriately
@@ -268,28 +266,17 @@ def personalized_message(input_message, author):
         output_message = random.choice(quotes)
     else:
         output_message = random.choice(personalized_messages[reply_to]['messages'])
-        print('1', output_message)
-
         # checks if the chosen message has already been sent recently to that user, if so chooses another one
         while output_message in personalized_messages[reply_to]['last_sent']:
-            print('changing')
             if set(personalized_messages[reply_to]['messages']) <= set(personalized_messages[reply_to]['last_sent']):
                 output_message = random.choice(quotes)
             else:
-                # selects either a quote from the general list or one from the personal list
-                dice_roll = random.random()
-                if dice_roll < 60:
-                    output_message = random.choice(personalized_messages[reply_to]['messages'])
-                else:
-                    output_message = random.choice(quotes)
+                output_message = random.choice(personalized_messages[reply_to]['messages'])
 
-        print('2', output_message)
         # updates 'last_sent' to only keep the last messages
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-5:]
 
-    print('3', output_message)
-    print('fin qui tutto ok?')
     # in some cases, based on who ZucaBot is replying to, sends special messages
     text = input_message['text'].lower()
     if reply_to == 'Zuca':
@@ -302,8 +289,6 @@ def personalized_message(input_message, author):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 output_message = 'Forse dovresti chiederlo a un costituzionalista'
-
-    print('4', output_message)
 
     return output_message
 
@@ -374,7 +359,7 @@ def interaction(received_message, chat, authors):
             if dice_roll == 1:
                 output_message = 'Stai buono'
         elif 'madre' in text or 'mamma' in text:
-            if message['from']['id'] == personalized_messages['Miur']['id']:
+            if received_message['from']['id'] == personalized_messages['Miur']['id']:
                 dice_roll = random.random()
                 if dice_roll < 0.5:
                     output_message = random.choice(['Nuova questa Miur!',
@@ -445,16 +430,14 @@ def interaction(received_message, chat, authors):
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
             output_message = random.choice(quotes)
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 7)
-            print('\n\n\n')
-            print(dice_roll)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
-                output_message = personalized_message(received_message, authors[-1])
+                output_message = personalized_message(received_message, authors[-1], probability=66)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
-                output_message = personalized_message(received_message, authors[-1])
+                output_message = personalized_message(received_message, authors[-1], probability=12)
 
         send_message(output_message, chat)
 
