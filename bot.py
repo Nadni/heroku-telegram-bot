@@ -445,7 +445,7 @@ def interaction(received_message, chat, authors):
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
             output_message = random.choice(quotes)
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 1)
+            dice_roll = random.randint(1, 7)
             print('\n\n\n')
             print(dice_roll)
             if dice_roll == 1:
