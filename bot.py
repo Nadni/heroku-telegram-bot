@@ -80,7 +80,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi', 'Nadali rimetti Porci',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
           'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo',
-          'Fini unico vero politico']
+          'Fini unico vero politico', 'Se ti dicessi che davanti a me è seduto Ruffi?']
 
 offese = ["Ma Ruffi\nDormivi?", "Nico Ago merda con bisturi", "Vali meno del calcio alle olimpiadi",
           "Vali meno del trofeo TIM", "Vali meno di Papi", "Frau Amadeus", "Non vali nulla",
@@ -104,7 +104,7 @@ complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei 
 personalized_messages = {
     'Porci': {'id': 44834863,
               'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"],
-              'last_sent': []},
+              'last_sent': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"]},
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
@@ -126,7 +126,7 @@ personalized_messages = {
             'last_sent': []},
     'Fora': {'id': 80692823,
              'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo',
-                          'Frociadori'],
+                          'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'],
              'last_sent': []},
     'Luca': {'id': 24510037,
              'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
@@ -246,6 +246,7 @@ def time_based_messages(datetime_of_last_message, clock, chat):
 # this function is used to choose a personalized message. "probability" is the % probability of a
 # personalized message, from 0 to 100
 def personalized_message(input_message, author, probability=50):
+    probability = int(probability)
     personalized = False
     reply_to = ''
 
@@ -402,6 +403,24 @@ def interaction(received_message, chat, authors):
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'sei stupido' in text.lower():
+            output_message = random.choice(['Tu sei stupido',
+                                            "Ma che cazzo vuoi\nFallito di merda"])
+        elif 'zuca' in text.lower() and 'sei scemo' in text.lower():
+            output_message = random.choice(['Tu sei scemo',
+                                            "Ma che cazzo vuoi\nFallito di merda"])
+        elif 'zuca' in text.lower() and 'coglione' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'idiota' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'cretino' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'fa' in text.lower() and 'schifo' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'fa' in text.lower() and 'pena' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
+        elif 'zuca' in text.lower() and 'fa' in text.lower() and 'cagare' in text.lower():
+            output_message = "Ma che cazzo vuoi\nFallito di merda"
         elif 'boldrini' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
@@ -437,7 +456,7 @@ def interaction(received_message, chat, authors):
         else:
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
-                output_message = personalized_message(received_message, authors[-1], probability=12)
+                output_message = personalized_message(received_message, authors[-1], probability=17)
 
         send_message(output_message, chat)
 
