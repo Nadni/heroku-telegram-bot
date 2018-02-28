@@ -9,12 +9,15 @@ import datetime
 token = os.environ['ZUCABOT_TOKEN']
 bot = telepot.Bot(token)
 received_messages = []
+authors = []
 for x in bot.getUpdates():
     try:
         check = x['message']
         received_messages.append(x)
+        authors.append(x['message']['from']['id'])
     except KeyError:
         pass
+print(authors)
 messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
@@ -70,7 +73,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Stai buono", "Stai fermo", "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi",
           'Yoses comunista che vota Monti', 'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can',
           'È sempre il solito teatrino', 'È sempre il solito teatrino',
-          'Nadali, ti prego trovami le radici reali di x^2+1=0',
+          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Siete dei calcinacci',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
           'Grazie, Boutique Raphaelle!', 'Considerato: \nbuono', 'Considerato: \ncattivo',
@@ -104,7 +107,8 @@ personalized_messages = {
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
-                         'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo'
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo',
+                         'Leonardino Fuffolo', 'Nadali togli Zuca',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0'],
             'last_sent': []},
     'Beppe': {'id': 20344105,
@@ -155,7 +159,7 @@ personalized_messages = {
              'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
              'last_sent': []},
     'Tazio': {'id': 92110842,
-              'messages': [],
+              'messages': ['stazione'],
               'last_sent': []},
     'Carlo Marchetto': {'id': 29315826,
                         'messages': [],
@@ -216,7 +220,6 @@ def time_based_messages(datetime_of_last_message, clock, chat):
     start = datetime.time(11, 0, 0)
     end = datetime.time(23, 0, 0)
     if is_time_in_range(start, end, now):
-        print(time.time() - datetime_of_last_message)
         # probability (every second) to send a message if nobody wrote anything in the last 30 minutes
         if time.time() - datetime_of_last_message < 30*60:
             probability = (1/99999999)*clock
@@ -240,24 +243,36 @@ def time_based_messages(datetime_of_last_message, clock, chat):
 
 
 # this function is used to choose a personalized message
-def personalized_message(message):
+def personalized_message(input_message, author):
+    print(author)
+    print('personalizing')
 
     # checks if the user who sent the message is in the dictionary "personalized_messages"
     personalized = False
     reply_to = ''
+
     for user in personalized_messages:
-        if personalized_messages[user]['id'] == message['from']['id']:
+        if personalized_messages[user]['id'] == author:
+        # if True:
             personalized = True
             reply_to = user
 
-    # if the user is not in the dictionary, just send a random message, otherwise choose appropriately
-    if personalized is False:
+    print('ci siamo?')
+    print(reply_to)
+    print(personalized)
+    print()
+
+    # if the user is not in the dictionary, or it has no associated messages, just send a random message.
+    # Otherwise choose appropriately
+    if personalized is False or personalized_messages[reply_to]['messages'] == []:
         output_message = random.choice(quotes)
     else:
         output_message = random.choice(personalized_messages[reply_to]['messages'])
+        print('1', output_message)
 
         # checks if the chosen message has already been sent recently to that user, if so chooses another one
         while output_message in personalized_messages[reply_to]['last_sent']:
+            print('changing')
             if set(personalized_messages[reply_to]['messages']) <= set(personalized_messages[reply_to]['last_sent']):
                 output_message = random.choice(quotes)
             else:
@@ -268,28 +283,33 @@ def personalized_message(message):
                 else:
                     output_message = random.choice(quotes)
 
+        print('2', output_message)
         # updates 'last_sent' to only keep the last messages
         personalized_messages[reply_to]['last_sent'].append(output_message)
         personalized_messages[reply_to]['last_sent'] = personalized_messages[reply_to]['last_sent'][-5:]
 
+    print('3', output_message)
+    print('fin qui tutto ok?')
     # in some cases, based on who ZucaBot is replying to, sends special messages
-    text = message['text'].lower()
+    text = input_message['text'].lower()
     if reply_to == 'Zuca':
         # has a random chance to just repeat what Zuca said
         dice_roll = random.randint(1, 5)
         if dice_roll < 4:
-            output_message = message['text']
+            output_message = input_message['text']
     if reply_to == 'Leo':
         if text[-1] == '?':
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
                 output_message = 'Forse dovresti chiederlo a un costituzionalista'
 
+    print('4', output_message)
+
     return output_message
 
 
 # this is the function that will be called every time ZucaBot receives a new message
-def interaction(received_message, chat):
+def interaction(received_message, chat, authors):
     global chain
     output_message = ''
 
@@ -302,8 +322,7 @@ def interaction(received_message, chat):
             if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() and \
                received_messages[-2]['message']['text'].lower() == received_messages[-3]['message']['text'].lower():
                 # checks if the last 3 messages were from different people
-                if received_messages[-1]['from']['id'] != received_messages[-2]['from']['id'] and \
-                   received_messages[-2]['from']['id'] != received_messages[-3]['from']['id']:
+                if authors[-1] != authors[-2] and authors[-2] != authors[-3]:
                     # checks if ZucaBot already partecipated in that chain
                     if text != chain:
                         bot.sendMessage(chat, text)
@@ -426,14 +445,16 @@ def interaction(received_message, chat):
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
             output_message = random.choice(quotes)
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 7)
+            dice_roll = random.randint(1, 1)
+            print('\n\n\n')
+            print(dice_roll)
             if dice_roll == 1:
-                output_message = personalized_message(message)
+                output_message = personalized_message(received_message, authors[-1])
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
-                output_message = personalized_message(message)
+                output_message = personalized_message(received_message, authors[-1])
 
         send_message(output_message, chat)
 
@@ -458,10 +479,12 @@ while True:
 
     # variable that stores most recent messages
     received_messages = []
+    authors = []
     for x in bot.getUpdates(offset=offset):
         try:
             check = x['message']
             received_messages.append(x)
+            authors.append(x['message']['from']['id'])
         except KeyError:
             pass
 
@@ -480,7 +503,7 @@ while True:
         last_message_datetime = time.time()
 
         # interacts
-        interaction(received_message, chat)
+        interaction(received_message, chat, authors)
 
         # prints information on the received message
         x = [print() for _ in range(10)]
