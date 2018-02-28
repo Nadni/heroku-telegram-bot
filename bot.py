@@ -235,12 +235,12 @@ def time_based_messages(datetime_of_last_message, clock, chat):
             inv_prob = 1
         dice_roll = random.randint(1, inv_prob)
         if dice_roll == 1:
-            output_message = random.choice(quotes + offese + complimenti)
-            send_message(chat, leonardo)
+            output_message = random.choice(quotes + complimenti)
+            send_message(output_message, chat)
 
 
 # this function is used to choose a personalized message
-def send_personalized_message(message):
+def personalized_message(message):
 
     # checks if the user who sent the message is in the dictionary "personalized_messages"
     personalized = False
@@ -428,12 +428,12 @@ def interaction(received_message, chat):
         elif 'zuca' in text.lower():
             dice_roll = random.randint(1, 7)
             if dice_roll == 1:
-                output_message = send_personalized_message(message)
+                output_message = personalized_message(message)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
             dice_roll = random.randint(1, 60)
             if dice_roll == 1:
-                output_message = send_personalized_message(message)
+                output_message = personalized_message(message)
 
         send_message(output_message, chat)
 
@@ -484,7 +484,7 @@ while True:
 
         # prints information on the received message
         x = [print() for _ in range(10)]
-        print('\n\n\n\n\n\n\n\n\n\n')
+        print('\n\n\n\n\n\n\n')
         print('NEW MESSAGE RECEIVED')
         for key in received_messages[-1]['message']:
             print(key)
