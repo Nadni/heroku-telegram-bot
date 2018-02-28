@@ -18,6 +18,7 @@ for x in bot.getUpdates():
 messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
+last_message_datetime = time.time()
 disservizi = -243280032
 leonardo = 24030913
 progetto_zucabot = -171074079
@@ -153,6 +154,12 @@ personalized_messages = {
     'Seba': {'id': 25331042,
              'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
              'last_sent': []},
+    'Tazio': {'id': 92110842,
+              'messages': [],
+              'last_sent': []},
+    'Carlo Marchetto': {'id': 29315826,
+                        'messages': [],
+                        'last_sent': []},
     'Miur': {'id': 0,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
                           'No porno Miur', 'La mamma dei Miur è sempre incinta'],
@@ -171,7 +178,68 @@ def is_time_in_range(start, end, x):
         return start <= x or x <= end
 
 
-# this function is used to send a personalised message
+def send_message(output_message, receiver):
+    if output_message != '':
+        bot.sendMessage(receiver, output_message)
+    # has a change to send a double message
+    dice_roll = random.random()
+    if dice_roll < 0.33:
+        if output_message in complimenti:
+            bot.sendMessage(receiver, 'Serio, no sfottò')
+        elif output_message in offese:
+            bot.sendMessage(receiver, 'Scherzo, sei un grande')
+
+
+# a function that sends messages based on what time of the day it is
+# CAREFUL, I am using two time formats here: to check which time of the day it is I am using
+# -datetime- librabry, while to calculate elapsed time I am using -time- library
+def time_based_messages(datetime_of_last_message, clock, chat):
+    now = datetime.datetime.time(datetime.datetime.now())
+
+    # if it's late in the night, has a small chance to ask 'Chi late?'
+    start = datetime.time(1, 0, 0)
+    end = datetime.time(3, 0, 0)
+    if is_time_in_range(start, end, now):
+        dice_roll = random.randint(1, int(14400/loop_cycle))
+        if dice_roll == 1:
+            bot.sendMessage(disservizi, 'Chi Late?')
+
+    # if it's early in the morning, has a small chance to ask '7.54 qualcuno?'
+    start = datetime.time(6, 30, 0)
+    end = datetime.time(7, 30, 0)
+    if is_time_in_range(start, end, now):
+        dice_roll = random.randint(1, int(14400/loop_cycle))
+        if dice_roll == 1:
+            bot.sendMessage(disservizi, '7.54 qualcuno?')
+
+    # if it's been a long time since someone wrote something, has a chance to write a message
+    start = datetime.time(11, 0, 0)
+    end = datetime.time(23, 0, 0)
+    if is_time_in_range(start, end, now):
+        print(time.time() - datetime_of_last_message)
+        # probability (every second) to send a message if nobody wrote anything in the last 30 minutes
+        if time.time() - datetime_of_last_message < 30*60:
+            probability = (1/99999999)*clock
+        # probability (every second) to send a message if nobody wrote anything in the last hour
+        elif time.time() - datetime_of_last_message < 60*60:
+            probability = (1/100000)*clock
+        # probability (every second) to send a message if nobody wrote anything in the last three hours
+        elif time.time() - datetime_of_last_message < 180*60:
+            probability = (1/40000)*clock
+        # probability (every second) to send a message if nobody wrote anything in the last twelve hour
+        else:
+            probability = (1/20000)*clock
+
+        inv_prob = int(1/probability)
+        if inv_prob < 1:
+            inv_prob = 1
+        dice_roll = random.randint(1, inv_prob)
+        if dice_roll == 1:
+            output_message = random.choice(quotes + offese + complimenti)
+            send_message(chat, leonardo)
+
+
+# this function is used to choose a personalized message
 def send_personalized_message(message):
 
     # checks if the user who sent the message is in the dictionary "personalized_messages"
@@ -221,12 +289,13 @@ def send_personalized_message(message):
 
 
 # this is the function that will be called every time ZucaBot receives a new message
-def interaction(message):
+def interaction(received_message, chat):
+    global chain
     output_message = ''
 
     # try to see if the received message contains any text, if so interacts, otherwise do nothing
     try:
-        text = message['text']
+        text = received_message['text']
 
         try:
             # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
@@ -238,7 +307,7 @@ def interaction(message):
                     # checks if ZucaBot already partecipated in that chain
                     if text != chain:
                         bot.sendMessage(chat, text)
-                        current_chain = text
+                        chain = text
         except KeyError:
             pass
 
@@ -366,15 +435,7 @@ def interaction(message):
             if dice_roll == 1:
                 output_message = send_personalized_message(message)
 
-        if output_message != '':
-            bot.sendMessage(chat, output_message)
-        # has a change to send a double message
-        dice_roll = random.random()
-        if dice_roll < 0.33:
-            if output_message in complimenti:
-                bot.sendMessage(chat, 'Serio, no sfottò')
-            elif output_message in offese:
-                bot.sendMessage(chat, 'Scherzo, sei un grande')
+        send_message(output_message, chat)
 
     except KeyError:
         pass
@@ -392,7 +453,7 @@ for message in received_messages:
 # main loop
 while True:
     # repeats the loop every 1 seconds
-    loop_cycle = 0.01  # number of seconds between loops
+    loop_cycle = 2  # number of seconds between loops
     time.sleep(loop_cycle)
 
     # variable that stores most recent messages
@@ -404,31 +465,22 @@ while True:
         except KeyError:
             pass
 
+    received_message = received_messages[-1]['message']
     # saves the ID of the chat who wrote the last message
     chat = received_messages[-1]['message']['chat']['id']
     # saves the ID of the last message
-    new_message = received_messages[-1]['update_id']
+    received_message_id = received_messages[-1]['update_id']
 
-    # if it's late in the night, has a small chance to ask 'Chi late?'
-    start = datetime.time(1, 0, 0)
-    end = datetime.time(3, 0, 0)
-    if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, int(14400/loop_cycle))
-        if dice_roll == 1:
-            bot.sendMessage(disservizi, 'Chi Late?')
-    # if it's early in the morning, has a small chance to ask '7.54 qualcuno?'
-    start = datetime.time(6, 30, 0)
-    end = datetime.time(7, 30, 0)
-    if is_time_in_range(start, end, datetime.datetime.time(datetime.datetime.now())):
-        dice_roll = random.randint(1, int(14400/loop_cycle))
-        if dice_roll == 1:
-            bot.sendMessage(disservizi, '7.54 qualcuno?')
+    time_based_messages(last_message_datetime, loop_cycle, chat)
 
     # checks if ZucaBot received a new message
-    if new_message != previous_message:
+    if received_message != previous_message:
+
+        # saves the time at which last message was received
+        last_message_datetime = time.time()
 
         # interacts
-        interaction(received_messages[-1]['message'])
+        interaction(received_message, chat)
 
         # prints information on the received message
         x = [print() for _ in range(10)]
@@ -439,7 +491,7 @@ while True:
             print('___________________', received_messages[-1]['message'][key])
 
         # discards the last message and gets ready to receive a new one
-        previous_message = new_message
+        previous_message = received_message
         offset = received_messages[-1]['update_id'] - 80  # only sees the last 80 messages
         if offset < 0:
             offset = 1
