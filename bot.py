@@ -367,7 +367,7 @@ def interaction(received_message, chat, authors):
             if dice_roll == 1:
                 output_message = 'Stai buono'
         elif 'madre' in text or 'mamma' in text:
-            if received_message['from']['id'] == personalized_messages['Miur']['id']:
+            if authors[-1] == personalized_messages['Miur']['id']:
                 dice_roll = random.random()
                 if dice_roll < 0.5:
                     output_message = random.choice(['Nuova questa Miur!',
