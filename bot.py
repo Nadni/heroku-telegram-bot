@@ -18,7 +18,6 @@ for x in bot.getUpdates():
         authors.append(x['message']['from']['id'])
     except KeyError:
         pass
-print(authors)
 messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
@@ -198,7 +197,7 @@ def send_message(output_message, receiver):
                 bot.sendMessage(receiver, 'Scherzo, sei un grande')
     else:
         output_message = "Questa è una chat illegale non autorizzata dall'egemone Leonardo Nadali"
-        bot.sendMessage(receiver, output_message)            
+        bot.sendMessage(receiver, output_message)
 
 
 # a function that sends messages based on what time of the day it is
@@ -311,15 +310,33 @@ def interaction(received_message, chat, authors):
         text = received_message['text']
 
         try:
+            # saves the text of the last messages
+            last_4 = [x['message']['text'].lower() for x in received_messages[-4:]]
+            print(last_4)
+
             # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
-            if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() and \
-               received_messages[-2]['message']['text'].lower() == received_messages[-3]['message']['text'].lower():
+            if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() \
+               and received_messages[-2]['message']['text'].lower() == received_messages[-3]['message']['text'].lower():
                 # checks if the last 3 messages were from different people
                 if authors[-1] != authors[-2] and authors[-2] != authors[-3]:
-                    # checks if ZucaBot already partecipated in that chain
-                    if text != chain:
+                    # checks if ZucaBot already participated in that chain
+                    if text.lower() != chain:
                         bot.sendMessage(chat, text)
-                        chain = text
+                        chain = text.lower()
+            elif text.lower() in last_4[:-1]:
+                # checks if the authors of the last messages are at least 3 different people
+                if len(set(authors[-4:])) >= 3:
+                    # if the last message is in the previous 3 messages, and counts how many times it was repeated,
+                    # if it's in 2 of the previous 3, and if the authors are different, sends it
+                    counter = 0
+                    for previous in last_4[:-1]:
+                        if text.lower() == previous.lower():
+                            counter += 1
+                    if counter > 1:
+                        if text.lower() != chain:
+                            bot.sendMessage(chat, text)
+                            chain = text.lower()
+
         except KeyError:
             pass
 
