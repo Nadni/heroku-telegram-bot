@@ -196,6 +196,9 @@ def send_message(output_message, receiver):
                 bot.sendMessage(receiver, 'Serio, no sfottò')
             elif output_message in offese:
                 bot.sendMessage(receiver, 'Scherzo, sei un grande')
+    else:
+        output_message = "Questa è una chat illegale non autorizzata dall'egemone Leonardo Nadali"
+        bot.sendMessage(receiver, output_message)            
 
 
 # a function that sends messages based on what time of the day it is
