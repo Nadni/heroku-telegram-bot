@@ -4,6 +4,7 @@ import time
 import os
 import random
 import datetime
+import pytz
 
 # bot initialisation
 token = os.environ['ZUCABOT_TOKEN']
@@ -22,6 +23,7 @@ messages_num = len(received_messages)
 print('Messages received:', messages_num)
 previous_message = received_messages[-1]['update_id']
 last_message_datetime = time.time()
+tz = pytz.timezone('Europe/Rome')
 disservizi = -243280032
 leonardo = 24030913
 progetto_zucabot = -171074079
@@ -132,7 +134,7 @@ personalized_messages = {
              'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
              'last_sent': []},
     'Gigi': {'id': 308878806,
-             'messages': ["Grande Gigi"],
+             'messages': ["Grande Gigi", 'Gasi Gigi', 'Gigi sei un grande'],
              'last_sent': []},
     'Nico Ago': {'id': 0,
                  'messages': ["Nico Ago sei merda con bisturi", 'Non come qualcun altro Agostini',
@@ -184,22 +186,24 @@ def is_time_in_range(start, end, x):
 
 
 def send_message(output_message, receiver):
-    if output_message != '':
-        bot.sendMessage(receiver, output_message)
-    # has a change to send a double message
-    dice_roll = random.random()
-    if dice_roll < 0.33:
-        if output_message in complimenti:
-            bot.sendMessage(receiver, 'Serio, no sfottò')
-        elif output_message in offese:
-            bot.sendMessage(receiver, 'Scherzo, sei un grande')
+    if receiver in [disservizi, leonardo, progetto_zucabot, test_group]:
+        if output_message != '':
+            bot.sendMessage(receiver, output_message)
+        # has a change to send a double message
+        dice_roll = random.random()
+        if dice_roll < 0.33:
+            if output_message in complimenti:
+                bot.sendMessage(receiver, 'Serio, no sfottò')
+            elif output_message in offese:
+                bot.sendMessage(receiver, 'Scherzo, sei un grande')
 
 
 # a function that sends messages based on what time of the day it is
 # CAREFUL, I am using two time formats here: to check which time of the day it is I am using
 # -datetime- librabry, while to calculate elapsed time I am using -time- library
+# CAREFUL2, when deployed in Heroku system time seems to be GMT+0, while Italy is in GMT+1
 def time_based_messages(datetime_of_last_message, clock, chat):
-    now = datetime.datetime.time(datetime.datetime.now())
+    now = datetime.datetime.time(datetime.datetime.now(tz=tz))
 
     # if it's late in the night, has a small chance to ask 'Chi late?'
     start = datetime.time(1, 0, 0)
@@ -503,8 +507,6 @@ while True:
 
         # saves the time at which last message was received
         last_message_datetime = time.time()
-
-        send_message(str(datetime.datetime.now()), leonardo)
 
         # interacts
         interaction(received_message, chat, authors)
