@@ -165,7 +165,7 @@ personalized_messages = {
     'Carlo Marchetto': {'id': 29315826,
                         'messages': [],
                         'last_sent': []},
-    'Miur': {'id': 0,
+    'Miur': {'id': 478031148,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
                           'No porno Miur', 'La mamma dei Miur è sempre incinta'],
              'last_sent': []},
@@ -503,6 +503,8 @@ while True:
 
         # saves the time at which last message was received
         last_message_datetime = time.time()
+
+        send_message(str(datetime.datetime.now()), leonardo)
 
         # interacts
         interaction(received_message, chat, authors)
