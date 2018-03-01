@@ -73,7 +73,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Frau che fa tesi sui pedalò", 'Rimettere Borto', "Porci ma quando esce articolo di ultimo uomo su Akinfeev?",
           "Stai buono", "Stai fermo", "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi",
           'Yoses comunista che vota Monti', 'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can',
-          'È sempre il solito teatrino', 'È sempre il solito teatrino',
+          'È sempre il solito teatrino', 'È sempre il solito teatrino', '1555',
           'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Siete dei calcinacci',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
@@ -81,7 +81,10 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi', 'Nadali rimetti Porci',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
           'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo',
-          'Fini unico vero politico', 'Se ti dicessi che davanti a me è seduto Ruffi?']
+          'Fini unico vero politico', 'Se ti dicessi che davanti a me è seduto Ruffi?',
+          'Per me eccellenza significa mettermi costantemente in gioco sfidando sé stessi e lo status quo. '
+          'Eccellenza significa voler fare la differenza, essere i primi e non accontentarsi mai. In sintesi '
+          'Eccellenza per me è passione ed ambizione', "Massimo cos'è per te l'Eccellenza?"]
 
 offese = ["Ma Ruffi\nDormivi?", "Nico Ago merda con bisturi", "Vali meno del calcio alle olimpiadi",
           "Vali meno del trofeo TIM", "Vali meno di Papi", "Frau Amadeus", "Non vali nulla",
@@ -102,76 +105,88 @@ complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
 # 'last_sent' hold the last personalised messages that were to that person (to check for repetitions)
+messages_to_everybody = []
 personalized_messages = {
     'Porci': {'id': 44834863,
-              'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"],
+              'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"] + messages_to_everybody,
               'last_sent': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"]},
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo',
-                         'Leonardino Fuffolo', 'Nadali togli Zuca',
-                         'Nadali, ti prego trovami le radici reali di x^2+1=0'],
+                         'Leonardino Fuffolo', 'Nadali togli Zuca', 'Scoppia il caso quan',
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0'] + messages_to_everybody,
             'last_sent': ["Leonardo\nCosa ne pensi dei credenti?", "Leonardo\nSecondo te l'economia è una scienza?"]},
     'Beppe': {'id': 20344105,
-              'messages': ["Rozzi"],
+              'messages': ["Rozzi"] + messages_to_everybody,
               'last_sent': []},
     'Frau': {'id': 38976241,
              'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
                           "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo', 'Ospe\ndale'
-                          'Frau sei Enrico Papi', "Frau cosa ci fai qua? Non è il giorno dell'umido"],
+                          'Frau sei Enrico Papi', "Frau cosa ci fai qua? Non è il giorno dell'umido",
+                          'Scoppia il caso quan'] + messages_to_everybody,
              'last_sent': []},
     'Mex': {'id': 54573695,
             'messages': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
-                         "Massimo\nCosa significa per te avere successo?"],
-            'last_sent': []},
+                         "Massimo\nCosa significa per te avere successo?",
+                         'Per me eccellenza significa mettermi costantemente in gioco '
+                         'sfidando sé stessi e lo status quo.',
+                         "Massimo cos'è per te l'Eccellenza?",
+                         "Eccellenza significa voler fare la differenza, essere i primi e non accontentarsi mai.",
+                         "In sintesi Eccellenza per me è passione ed ambizione"] + messages_to_everybody,
+            'last_sent': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
+                          "Massimo\nCosa significa per te avere successo?",]},
     'Fora': {'id': 80692823,
              'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo',
-                          'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'],
+                          'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'] + messages_to_everybody,
              'last_sent': []},
     'Luca': {'id': 24510037,
-             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'Luca, vali meno di Papi'],
+             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?',
+                          'Luca, vali meno di Papi', '1555'] + messages_to_everybody,
              'last_sent': []},
     'Gigi': {'id': 308878806,
-             'messages': ["Grande Gigi", 'Gasi Gigi', 'Gigi sei un grande'],
+             'messages': ["Grande Gigi", 'Gasi Gigi', 'Gigi sei un grande'] + messages_to_everybody,
              'last_sent': []},
     'Nico Ago': {'id': 0,
                  'messages': ["Nico Ago sei merda con bisturi", 'Non come qualcun altro Agostini',
                               "Nico Ago\nVali meno del cestino degli scarti ospedalieri",
-                              "Agostini cosa ci fai qua? Non è il giorno dell'umido"],
+                              "Agostini cosa ci fai qua? Non è il giorno dell'umido"] + messages_to_everybody,
                  'last_sent': []},
     'Trabucco': {'id': 0,
-                 'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"],
+                 'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"] + messages_to_everybody,
                  'last_sent': []},
     'Marassi': {'id': 129705113,
-                'messages': ["Grande André\nHai ficcato?"],
+                'messages': ["Grande André\nHai ficcato?"] + messages_to_everybody,
                 'last_sent': []},
     'Yoses': {'id': 62613803,
               'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti',
-                           'Ma Yoses, sei stupido?', 'AAA cercasi coerenza',
-                           'Non come qualcun altro Agostini', "Yoses comunista con l'iphone"],
+                           'Ma Yoses, sei stupido?', 'AAA cercasi coerenza', 'Scoppia il caso quan',
+                           'Non come qualcun altro Agostini', "Yoses comunista con l'iphone"] + messages_to_everybody,
               'last_sent': []},
     'Cevallos': {'id': 1168808856,
-                 'messages': ['Dio can Ceva', 'Occhiale o non occhiale?'],
+                 'messages': ['Dio can Ceva', 'Occhiale o non occhiale?',
+                              'Scoppia il caso quan'] + messages_to_everybody,
                  'last_sent': []},
     'Zuca': {'id': 323998218,
-             'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo', 'Nadali hai aggiunto nuove frasi a Zuca?'],
+             'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo', 'Nadali hai aggiunto nuove frasi a Zuca?',
+                          'Scoppia il caso quan'] + messages_to_everybody,
              'last_sent': []},
     'Seba': {'id': 25331042,
-             'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
+             'messages': ['Sebach', 'I <3 Sebach', 'Sebach'] + messages_to_everybody,
              'last_sent': []},
     'Tazio': {'id': 92110842,
-              'messages': ['stazione'],
+              'messages': ['stazione'] + messages_to_everybody,
               'last_sent': []},
     'Carlo Marchetto': {'id': 29315826,
                         'messages': [],
                         'last_sent': []},
     'Miur': {'id': 478031148,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
-                          'No porno Miur', 'La mamma dei Miur è sempre incinta'],
+                          'No porno Miur', 'La mamma dei Miur è sempre incinta',
+                          'Scoppia il caso quan'] + messages_to_everybody,
              'last_sent': []},
     'Immaginary_bot': {'id': 25331042,
-                       'messages': ['Sebach', 'I <3 Sebach', 'Sebach'],
+                       'messages': ['Sebach', 'I <3 Sebach', 'Sebach'] + messages_to_everybody,
                        'last_sent': []}}
 
 
@@ -312,7 +327,6 @@ def interaction(received_message, chat, authors):
         try:
             # saves the text of the last messages
             last_4 = [x['message']['text'].lower() for x in received_messages[-4:]]
-            print(last_4)
 
             # checks if the last 3 messages are the same (quindi siamo in una catena), if so reply the same
             if received_messages[-1]['message']['text'].lower() == received_messages[-2]['message']['text'].lower() \
@@ -326,8 +340,8 @@ def interaction(received_message, chat, authors):
             elif text.lower() in last_4[:-1]:
                 # checks if the authors of the last messages are at least 3 different people
                 if len(set(authors[-4:])) >= 3:
-                    # if the last message is in the previous 3 messages, and counts how many times it was repeated,
-                    # if it's in 2 of the previous 3, and if the authors are different, sends it
+                    # checks if the last message is in the previous 3 messages, and counts how many times it was
+                    # repeated. If it's in 2 of the previous 3, and if the authors are different, sends it
                     counter = 0
                     for previous in last_4[:-1]:
                         if text.lower() == previous.lower():
@@ -399,6 +413,10 @@ def interaction(received_message, chat, authors):
             if dice_roll == 1:
                 output_message = 'Considerata: buona'
         elif 'berlusconi' in text.lower():
+            dice_roll = random.randint(1, 6)
+            if dice_roll == 1:
+                output_message = 'Considerato: cattivo'
+        elif 'putin' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 output_message = 'Considerato: cattivo'
@@ -488,7 +506,7 @@ def interaction(received_message, chat, authors):
         pass
 
 # prints information on the received message
-x = [print() for _ in range(10)]
+print('\n\n\n\n\n\n\n\n\n\n')
 for message in received_messages:
     print('\n\n\n\n\n\n\n\n\n\n')
     print(message)
@@ -499,9 +517,10 @@ for message in received_messages:
 
 # main loop
 while True:
-    # repeats the loop every 1 seconds
     loop_cycle = 2  # number of seconds between loops
     time.sleep(loop_cycle)
+
+    print(personalized_messages['Beppe'])
 
     # variable that stores most recent messages
     received_messages = []
@@ -515,11 +534,12 @@ while True:
             pass
 
     received_message = received_messages[-1]['message']
-    # saves the ID of the chat who wrote the last message
+    # saves the ID of the chat the last message was written in
     chat = received_messages[-1]['message']['chat']['id']
     # saves the ID of the last message
     received_message_id = received_messages[-1]['update_id']
 
+    # checks which time of the day it is and if it has to send any time-dependent messages
     time_based_messages(last_message_datetime, loop_cycle, chat)
 
     # checks if ZucaBot received a new message
