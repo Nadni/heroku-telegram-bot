@@ -115,7 +115,7 @@ personalized_messages = {
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo',
                          'Leonardino Fuffolo', 'Nadali togli Zuca', 'Scoppia il caso quan',
-                         'Nadali, ti prego trovami le radici reali di x^2+1=0', 
+                         'Nadali, ti prego trovami le radici reali di x^2+1=0',
                          'Sei un fallito'] + messages_to_everybody,
             'last_sent': ["Leonardo\nCosa ne pensi dei credenti?", "Leonardo\nSecondo te l'economia è una scienza?"]},
     'Beppe': {'id': 20344105,
@@ -142,7 +142,7 @@ personalized_messages = {
                           'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'] + messages_to_everybody,
              'last_sent': []},
     'Luca': {'id': 24510037,
-             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 
+             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?',
                           '1555', 'Lyca', 'Lyca Riffi', 'Sei un fallito'] + messages_to_everybody,
              'last_sent': []},
     'Gigi': {'id': 308878806,
@@ -151,7 +151,7 @@ personalized_messages = {
     'Nico Ago': {'id': 0,
                  'messages': ["Nico Ago sei merda con bisturi", 'Non come qualcun altro Agostini',
                               "Nico Ago\nVali meno del cestino degli scarti ospedalieri",
-                              "Agostini cosa ci fai qua? Non è il giorno dell'umido", 
+                              "Agostini cosa ci fai qua? Non è il giorno dell'umido",
                               'Sei un fallito'] + messages_to_everybody,
                  'last_sent': []},
     'Trabucco': {'id': 0,
@@ -384,6 +384,16 @@ def interaction(received_message, chat, authors):
             output_message = '*sé'
         elif 'dò' in text.lower():
             output_message = '*do'
+        elif 'vabbé' in text.lower():
+            output_message = '*va beh'
+        elif 'va bhe' in text.lower():
+            output_message = '*va beh'
+        elif 'bhe' in text.lower():
+            output_message = '*beh'
+        elif 'bho' in text.lower():
+            output_message = '*boh'
+        elif 'mha' in text.lower():
+            output_message = '*mah'
         elif "qual'è" in text.lower():
             output_message = '*qual è'
         elif "perchè" in text.lower():
@@ -493,13 +503,18 @@ def interaction(received_message, chat, authors):
             output_message = random.choice(quotes)
         elif 'dicci' in text.lower() and 'zuca' in text.lower():
             output_message = random.choice(quotes)
+        elif 'zuca' in text.lower() and '?' in text.lower():
+            dice_roll = random.randint(1, 3)
+            if dice_roll == 1:
+                output_message = personalized_message(received_message, authors[-1], probability=66)
+        # if nobody wants ZucaBot, send a message anyway with some probability
         elif 'zuca' in text.lower():
-            dice_roll = random.randint(1, 12)
+            dice_roll = random.randint(1, 10)
             if dice_roll == 1:
                 output_message = personalized_message(received_message, authors[-1], probability=66)
         # if nobody wants ZucaBot, send a message anyway with some probability
         else:
-            dice_roll = random.randint(1, 60)
+            dice_roll = random.randint(1, 50)
             if dice_roll == 1:
                 output_message = personalized_message(received_message, authors[-1], probability=17)
 
