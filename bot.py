@@ -80,18 +80,19 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           'Grazie, Boutique Raphaelle!', 'Considerato: \nbuono', 'Considerato: \ncattivo',
           'Non come qualcun altro Agostini', 'Madonna brutta pellegrina\nAiutatemi', 'Nadali rimetti Porci',
           'A che ora passa il Nadali-Stringari?', 'È già passato lo Stringari-Frociadori?',
-          'Nadali fammi entrare nella Sadness', 'Fora che per scopare deve andare in paesi del terzo mondo',
+          'Nadali fammi entrare nella Sadness', 'Frociadori che per scopare deve andare in paesi del terzo mondo',
           'Fini unico vero politico', 'Se ti dicessi che davanti a me è seduto Ruffi?',
           'Per me eccellenza significa mettermi costantemente in gioco sfidando sé stessi e lo status quo. '
           'Eccellenza significa voler fare la differenza, essere i primi e non accontentarsi mai. In sintesi '
-          'Eccellenza per me è passione ed ambizione', "Massimo cos'è per te l'Eccellenza?"]
+          'Eccellenza per me è passione ed ambizione', "Massimo cos'è per te l'Eccellenza?",
+          'Perché tutto va oltre le vostre inutili guerre', 'Considerato: cardiaco', 'Massa aghogne']
 
 offese = ["Ma Ruffi\nDormivi?", "Nico Ago merda con bisturi", "Vali meno del calcio alle olimpiadi",
           "Vali meno del trofeo TIM", "Vali meno di Papi", "Frau Amadeus", "Non vali nulla",
           "Ma che cazzo vuoi\nFallito di merda", "Nico Ago\nVali meno del cestino degli scarti ospedalieri",
           "Porco dio vali meno della carta del prosciutto", 'Yoses comunista che vota Monti',
           'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Non come qualcun altro Agostini',
-          'Fora che per scopare deve andare in paesi del terzo mondo', "Frau sei Amadeus",
+          'Frociadori che per scopare deve andare in paesi del terzo mondo', "Frau sei Amadeus",
           "Frau che fa tesi sui pedalò", 'Frau ebreo', "Frau cosa ci fai qua? Non è il giorno dell'umido",
           "Nico Ago sei merda con bisturi", "Agostini cosa ci fai qua? Non è il giorno dell'umido",
           'Ma Yoses, sei stupido?', "Yoses comunista con l'iphone", 'Sei un fallito',
@@ -105,7 +106,7 @@ complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
 # 'last_sent' hold the last personalised messages that were to that person (to check for repetitions)
-messages_to_everybody = []
+messages_to_everybody = ['Uno, due, tre... Ridere!!!']
 personalized_messages = {
     'Porci': {'id': 44834863,
               'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"] + messages_to_everybody,
@@ -123,7 +124,7 @@ personalized_messages = {
               'last_sent': []},
     'Frau': {'id': 38976241,
              'messages': ["Dio can frau", "Frau sei Amadeus", "Frau che fa tesi sui pedalò",
-                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo', 'Ospe\ndale'
+                          "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi", 'Frau ebreo', 'Ospe\ndale',
                           'Frau sei Enrico Papi', "Frau cosa ci fai qua? Non è il giorno dell'umido",
                           'Scoppia il caso quan', 'Sei un fallito'] + messages_to_everybody,
              'last_sent': []},
@@ -138,7 +139,7 @@ personalized_messages = {
             'last_sent': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
                           "Massimo\nCosa significa per te avere successo?"]},
     'Fora': {'id': 80692823,
-             'messages': ["Frocia", 'Başakbanchi', 'Fora che per scopare deve andare in paesi del terzo mondo',
+             'messages': ["Frocia", 'Başakbanchi', 'Frociadori che per scopare deve andare in paesi del terzo mondo',
                           'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'] + messages_to_everybody,
              'last_sent': []},
     'Luca': {'id': 24510037,
@@ -208,7 +209,7 @@ def send_message(output_message, receiver):
             bot.sendMessage(receiver, output_message)
         # has a change to send a double message
         dice_roll = random.random()
-        if dice_roll < 0.33:
+        if dice_roll < 0.25:
             if output_message in complimenti:
                 bot.sendMessage(receiver, 'Serio, no sfottò')
             elif output_message in offese:
@@ -229,7 +230,7 @@ def time_based_messages(datetime_of_last_message, clock, chat):
     start = datetime.time(1, 0, 0)
     end = datetime.time(3, 0, 0)
     if is_time_in_range(start, end, now):
-        dice_roll = random.randint(1, int(14400/loop_cycle))
+        dice_roll = random.randint(1, int(43200/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, 'Chi Late?')
 
@@ -237,7 +238,7 @@ def time_based_messages(datetime_of_last_message, clock, chat):
     start = datetime.time(6, 30, 0)
     end = datetime.time(7, 30, 0)
     if is_time_in_range(start, end, now):
-        dice_roll = random.randint(1, int(14400/loop_cycle))
+        dice_roll = random.randint(1, int(43200/loop_cycle))
         if dice_roll == 1:
             bot.sendMessage(disservizi, '7.54 qualcuno?')
 
@@ -377,6 +378,8 @@ def interaction(received_message, chat, authors):
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
                 output_message = 'Sei uno scherzo'
+        elif 'É' in text:
+            output_message = '*È'
         elif 'é' in text.lower() and 'ché' not in text.lower() and\
                 'né' not in text.lower() and 'sé' not in text.lower():
             output_message = '*è'
@@ -398,6 +401,14 @@ def interaction(received_message, chat, authors):
             output_message = '*qual è'
         elif "perchè" in text.lower():
             output_message = '*perché'
+        elif "E'" in text:
+            output_message = '*È'
+        elif "e'" in text:
+            output_message = '*è'
+        elif "dì" in text.lower():
+            output_message = "*di'"
+        elif "si'" in text.lower():
+            output_message = "*sì"
         elif 'italia' in text.lower() or 'lo stivale' in text.lower():
             dice_roll = random.randint(1, 5)
             if dice_roll == 1:
@@ -420,7 +431,7 @@ def interaction(received_message, chat, authors):
         elif 'salvini' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'considerato: cattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'merkel' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
@@ -428,28 +439,28 @@ def interaction(received_message, chat, authors):
         elif 'berlusconi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'Considerato: cattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'putin' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'Considerato: cattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'mussolini' in text.lower() or 'duce' in text.lower() or \
                         'ducie' in text.lower() or 'dux' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'Considerato: cattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'trump' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'considerato: \ncattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'erdogan' in text.lower() or 'tayyip' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'Considerato : \ncattivo'
+                output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'renzi' in text.lower():
             dice_roll = random.randint(1, 6)
             if dice_roll == 1:
-                output_message = 'Considerato: buono'
+                output_message = random.choice(['considerato: buono', 'Considerato: cardiaco'])
         elif "ca" in text.lower() and "foscari" in text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
@@ -494,7 +505,8 @@ def interaction(received_message, chat, authors):
                                                 "L'unica cosa che fa ridere è la tua vita",
                                                 'Ridi ridi\ncoglione',
                                                 'Non fa ridere, idiota',
-                                                'Ridi perché ti sei guardato allo specchio?'])
+                                                'Ridi perché ti sei guardato allo specchio?',
+                                                'Massa aghogne'])
         elif 'eh?' == text.lower():
             dice_roll = random.randint(1, 2)
             if dice_roll == 1:
