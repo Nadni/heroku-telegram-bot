@@ -405,7 +405,7 @@ def interaction(received_message, chat, authors):
             output_message = '*È'
         elif "e'" in text:
             output_message = '*è'
-        elif "dì" in text.lower():
+        elif " dì" in text.lower():
             output_message = "*di'"
         elif "si'" in text.lower():
             output_message = "*sì"
