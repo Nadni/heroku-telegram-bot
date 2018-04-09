@@ -361,7 +361,9 @@ def interaction(received_message, chat, authors):
         lower_text = text.lower()
         # answer based on the text
         if 'russia' in text.lower():
-            output_message = random.choice(russia)
+            dice_roll = random.randint(1, 3)
+            if dice_roll == 1:
+                output_message = random.choice(russia)
         elif 'massimone' in text.lower():
             output_message = 'Papirone'
         elif 'papirone' in text.lower():
