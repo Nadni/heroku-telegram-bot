@@ -382,12 +382,11 @@ def interaction(received_message, chat, authors):
                 output_message = 'Sei uno scherzo'
         elif 'É' in text:
             output_message = '*È'
-        elif 'é' in text.lower() and 'ché' not in text.lower() and\
-                'né' not in text.lower() and 'sé' not in text.lower():
+        elif ' é' in text.lower():
             output_message = '*è'
-        elif 'sè' in text.lower():
+        elif ' sè' in text.lower():
             output_message = '*sé'
-        elif 'dò' in text.lower():
+        elif ' dò' in text.lower():
             output_message = '*do'
         elif 'vabbé' in text.lower():
             output_message = '*va beh'
@@ -411,6 +410,8 @@ def interaction(received_message, chat, authors):
             output_message = "*di'"
         elif "si'" in text.lower():
             output_message = "*sì"
+        elif "si" == text.lower():
+            output_message = "*Sì"
         elif 'italia' in text.lower() or 'lo stivale' in text.lower():
             dice_roll = random.randint(1, 5)
             if dice_roll == 1:
