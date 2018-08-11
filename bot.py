@@ -70,7 +70,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Vali meno di Papi", "Frau Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
           "Ma che cazzo vuoi\nFallito di merda", 'AAA cercasi coerenza', "Troppo triste pendando all'11 settembre",
           "Porco dio vali meno della carta del prosciutto", "Dio can persa anche questa al fanta",
-          "Frau che fa tesi sui pedalò", 'Rimettere Borto', "Porci ma quando esce articolo di ultimo uomo su Akinfeev?",
+          "Frau che fa tesi sui pedalò", 'Rimettere Borto', 'Vabbè', 'Ma è vera sta roba?',
           "Stai buono", "Stai fermo", "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi",
           'Yoses comunista che vota Monti', 'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can',
           'È sempre il solito teatrino', 'È sempre il solito teatrino', '1555',
@@ -109,8 +109,8 @@ complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei 
 messages_to_everybody = ['Uno, due, tre... Ridere!!!']
 personalized_messages = {
     'Porci': {'id': 44834863,
-              'messages': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"] + messages_to_everybody,
-              'last_sent': ["Porci ma quando esce articolo di ultimo uomo su Akinfeev?"]},
+              'messages': [] + messages_to_everybody,
+              'last_sent': []},
     'Leo': {'id': 24030913,
             'messages': ["Leonardo\nCosa ne pensi dei credenti?", "Vabbè Leonardo", "Vabbè Leonardo",
                          "Leonardo\nSecondo te l'economia è una scienza?", 'Nadali togli Zuca',
@@ -118,7 +118,7 @@ personalized_messages = {
                          'Leonardino Fuffolo', 'Nadali togli Zuca', 'Scoppia il caso quan',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0',
                          'Sei un fallito'] + messages_to_everybody,
-            'last_sent': ["Leonardo\nCosa ne pensi dei credenti?", "Leonardo\nSecondo te l'economia è una scienza?"]},
+            'last_sent': []},
     'Beppe': {'id': 20344105,
               'messages': ["Rozzi"] + messages_to_everybody,
               'last_sent': []},
@@ -136,8 +136,7 @@ personalized_messages = {
                          "Massimo cos'è per te l'Eccellenza?",
                          "Eccellenza significa voler fare la differenza, essere i primi e non accontentarsi mai.",
                          "In sintesi Eccellenza per me è passione ed ambizione"] + messages_to_everybody,
-            'last_sent': ["Massimo\nPensi di aver raggiunto il successo nella vita?",
-                          "Massimo\nCosa significa per te avere successo?"]},
+            'last_sent': []},
     'Fora': {'id': 80692823,
              'messages': ["Frocia", 'Başakbanchi', 'Frociadori che per scopare deve andare in paesi del terzo mondo',
                           'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'] + messages_to_everybody,
@@ -173,22 +172,22 @@ personalized_messages = {
                  'last_sent': []},
     'Zuca': {'id': 323998218,
              'messages': ['Nadali, togli Zuca', 'Questo bot fa schifo', 'Nadali hai aggiunto nuove frasi a Zuca?',
-                          'Scoppia il caso quan', 'Nadali hai rovinato questo bot', 
-                          'Nadali togli i messaggi non miei da Zuca', 
+                          'Scoppia il caso quan', 'Nadali hai rovinato questo bot',
+                          'Nadali togli i messaggi non miei da Zuca',
                           'Ridicolo Nadali che manipola Zuca in diretta'] + messages_to_everybody,
              'last_sent': []},
     'Seba': {'id': 25331042,
              'messages': ['Sebach', 'I <3 Sebach', 'Sebach'] + messages_to_everybody,
              'last_sent': []},
     'Tazio': {'id': 92110842,
-              'messages': ['stazione'] + messages_to_everybody,
+              'messages': ['stazione', 'Grande Stazione'] + messages_to_everybody,
               'last_sent': []},
     'Carlo Marchetto': {'id': 29315826,
                         'messages': [],
                         'last_sent': []},
     'Miur': {'id': 478031148,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
-                          'No porno Miur', 'La mamma dei Miur è sempre incinta', 'Sei un fallito',
+                          'La mamma dei Miur è sempre incinta', 'Sei un fallito', 'Ma è vera sta roba?'
                           'Scoppia il caso quan'] + messages_to_everybody,
              'last_sent': []},
     'Immaginary_bot': {'id': 25331042,
@@ -211,7 +210,7 @@ def send_message(output_message, receiver):
             bot.sendMessage(receiver, output_message)
         # has a change to send a double message
         dice_roll = random.random()
-        if dice_roll < 0.25:
+        if dice_roll < 0.20:
             if output_message in complimenti:
                 bot.sendMessage(receiver, 'Serio, no sfottò')
             elif output_message in offese:
@@ -382,7 +381,7 @@ def interaction(received_message, chat, authors):
             dice_roll = random.randint(1, 4)
             if dice_roll == 1:
                 output_message = 'Sei uno scherzo'
-        elif 'É' in text:
+        elif 'PERCHÉ' in text:
             output_message = '*È'
         elif ' é' in text.lower():
             output_message = '*è'
@@ -404,9 +403,9 @@ def interaction(received_message, chat, authors):
             output_message = '*qual è'
         elif "perchè" in text.lower():
             output_message = '*perché'
-        elif "E'" in text:
+        elif "E' " in text:
             output_message = '*È'
-        elif "e'" in text:
+        elif "e' " in text:
             output_message = '*è'
         elif " dì" in text.lower():
             output_message = "*di'"
@@ -415,7 +414,7 @@ def interaction(received_message, chat, authors):
         elif "si" == text.lower():
             output_message = "*Sì"
         elif 'italia' in text.lower() or 'lo stivale' in text.lower():
-            dice_roll = random.randint(1, 5)
+            dice_roll = random.randint(1, 10)
             if dice_roll == 1:
                 output_message = 'Il paese che amk'
         elif 'ma ruffi' == text.lower() or 'ma luca' == text.lower():
@@ -429,45 +428,45 @@ def interaction(received_message, chat, authors):
         elif 'madre' in text or 'mamma' in text:
             if authors[-1] == personalized_messages['Miur']['id']:
                 dice_roll = random.random()
-                if dice_roll < 0.5:
+                if dice_roll < 0.2:
                     output_message = random.choice(['Nuova questa Miur!',
                                                     'Miur, è dalla terza media che non fa ridere',
                                                     'La mamma dei Miur è sempre incinta'])
         elif 'salvini' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'merkel' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = 'Considerata: buona'
         elif 'berlusconi' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'putin' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'mussolini' in text.lower() or 'duce' in text.lower() or \
                         'ducie' in text.lower() or 'dux' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'trump' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'erdogan' in text.lower() or 'tayyip' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: cattivo', 'Considerato: cardiaco'])
         elif 'renzi' in text.lower():
-            dice_roll = random.randint(1, 6)
+            dice_roll = random.randint(1, 12)
             if dice_roll == 1:
                 output_message = random.choice(['considerato: buono', 'Considerato: cardiaco'])
         elif "ca" in text.lower() and "foscari" in text.lower():
-            dice_roll = random.randint(1, 2)
+            dice_roll = random.randint(1, 6)
             if dice_roll == 1:
                 output_message = "Ca' Fosfati"
         elif 'zuca, sei' in text.lower() or 'zuca sei' in text.lower():
@@ -504,13 +503,14 @@ def interaction(received_message, chat, authors):
                                                 'Sì, ma senza protesi',
                                                 'Con o senza protesi?'])
         elif 'hahaha' in text.lower() or 'ahhah' in text.lower() or 'rido' == text.lower():
-            dice_roll = random.randint(1, 60)
+            dice_roll = random.randint(1, 100)
             if dice_roll == 1:
                 output_message = random.choice(['Ma cosa ridi deficiente?',
                                                 "L'unica cosa che fa ridere è la tua vita",
                                                 'Ridi ridi\ncoglione',
                                                 'Non fa ridere, idiota',
                                                 'Ridi perché ti sei guardato allo specchio?',
+                                                'Massa aghogne',
                                                 'Massa aghogne'])
         elif 'eh?' == text.lower():
             dice_roll = random.randint(1, 2)
@@ -539,6 +539,7 @@ def interaction(received_message, chat, authors):
 
     except KeyError:
         pass
+
 
 # prints information on the received message
 print('\n\n\n\n\n\n\n\n\n\n')
