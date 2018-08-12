@@ -64,7 +64,7 @@ russia = ["FC Abinsk", "FC Agan Raduzhny", "FC Agidel Ufa", "FC Agrokomplekt Rya
 
 quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei calcinacci",
           "Cosa avevi in mente? Tutta un'altra vita", "Che fantastica storia è la vita", "Rozzi",
-          "Trabbi\nCosa ne pensi di NCIS 9x10?", "Sto andando a fare ripe", "Dio can",
+          "Trabbi\nCosa ne pensi di NCIS 9x10?", "Sto andando a fare ripe", "Dio can", '@nadni aggiungi Zane'
           "Dio can frau", "Frocia", "Nico Ago merda con bisturi", "Ca' Fosfati", 'Ospe\ndale',
           "Vali meno del calcio alle olimpiadi", "Vabbè", "Vali meno del trofeo TIM",
           "Vali meno di Papi", "Frau Amadeus", "Non vali nulla", "Dio can\nE anche oggi in Torre Archimede",
@@ -73,7 +73,7 @@ quotes = ["Icurdi o Icardi?", "Chi aula?", "Klose dell'altro mondo", "Siete dei 
           "Frau che fa tesi sui pedalò", 'Rimettere Borto', 'Vabbè', 'Ma è vera sta roba?',
           "Stai buono", "Stai fermo", "Frau\nRimetti Nadali", "Frau\nButta fuori Trabbi",
           'Yoses comunista che vota Monti', 'Nadali togli Zuca', 'Che fantastica storia è la vita', 'Dio can',
-          'È sempre il solito teatrino', 'È sempre il solito teatrino', '1555',
+          'È sempre il solito teatrino', 'È sempre il solito teatrino', '1555', '@nadni aggiungi Zane',
           'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Siete dei calcinacci',
           'Prendiamo cinque stronzi fatti bene', 'Ha avuto ptutto', 'Tutti i CV bombi', 'Consare pencosticine',
           'Incontrato merde cartolaie', 'Non mi gasa ragazza puttana', 'Occhiale o non occhiale?',
@@ -106,7 +106,7 @@ complimenti = ["Che fantastica storia è la vita", "Leonardo\nCosa ne pensi dei 
 # this dictionary is used to send personalized messages. It contains one sub-set for each user, 'id' is
 # the Telegram ID of that user, 'messages' is the list of possible personalized messages, and
 # 'last_sent' hold the last personalised messages that were to that person (to check for repetitions)
-messages_to_everybody = ['Uno, due, tre... Ridere!!!']
+messages_to_everybody = ['Uno, due, tre... Ridere!!!', 'Sei un fallito']
 personalized_messages = {
     'Porci': {'id': 44834863,
               'messages': [] + messages_to_everybody,
@@ -117,7 +117,7 @@ personalized_messages = {
                          'Nadali, ti prego trovami le radici reali di x^2+1=0', 'Leonardino Fuffolo',
                          'Leonardino Fuffolo', 'Nadali togli Zuca', 'Scoppia il caso quan',
                          'Nadali, ti prego trovami le radici reali di x^2+1=0',
-                         'Sei un fallito'] + messages_to_everybody,
+                         'Sei un fallito', 'Nadali aggiungi Zane'] + messages_to_everybody,
             'last_sent': []},
     'Beppe': {'id': 20344105,
               'messages': ["Rozzi"] + messages_to_everybody,
@@ -142,7 +142,7 @@ personalized_messages = {
                           'Frociadori', 'Se ti dicessi che davanti a me è seduto Ruffi?'] + messages_to_everybody,
              'last_sent': []},
     'Luca': {'id': 24510037,
-             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?',
+             'messages': ["Ma Ruffi\nDormivi?", 'Luca\nTi gasa ragazza puttana?', 'stipendio faraonico',
                           '1555', 'Lyca', 'Lyca Riffi', 'Sei un fallito'] + messages_to_everybody,
              'last_sent': []},
     'Gigi': {'id': 308878806,
@@ -158,10 +158,10 @@ personalized_messages = {
                  'messages': ["Trabbi\nCosa ne pensi di NCIS 9x10?"] + messages_to_everybody,
                  'last_sent': []},
     'Marassi': {'id': 129705113,
-                'messages': ["Grande André\nHai ficcato?"] + messages_to_everybody,
+                'messages': ["Grande André\nHai ficcato?", '101.8', 'La carica dei 101.8'] + messages_to_everybody,
                 'last_sent': []},
     'Yoses': {'id': 62613803,
-              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti',
+              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti', 'Olmo centro del mondo'
                            'Ma Yoses, sei stupido?', 'AAA cercasi coerenza', 'Scoppia il caso quan',
                            'Non come qualcun altro Agostini', "Yoses comunista con l'iphone",
                            'Sei un fallito'] + messages_to_everybody,
@@ -180,14 +180,14 @@ personalized_messages = {
              'messages': ['Sebach', 'I <3 Sebach', 'Sebach'] + messages_to_everybody,
              'last_sent': []},
     'Tazio': {'id': 92110842,
-              'messages': ['stazione', 'Grande Stazione'] + messages_to_everybody,
+              'messages': ['Stazione', 'Grande Stazione'] + messages_to_everybody,
               'last_sent': []},
     'Carlo Marchetto': {'id': 29315826,
                         'messages': [],
                         'last_sent': []},
     'Miur': {'id': 478031148,
              'messages': ['Mamma del Miuro è sinonimo di puttana, quindi puoi metterla in qualsiasi contesto',
-                          'La mamma dei Miur è sempre incinta', 'Sei un fallito', 'Ma è vera sta roba?'
+                          'La mamma dei Miur è sempre incinta', 'Sei un fallito', 'Ma è vera sta roba?', '613',
                           'Scoppia il caso quan'] + messages_to_everybody,
              'last_sent': []},
     'Immaginary_bot': {'id': 25331042,
