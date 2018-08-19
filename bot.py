@@ -161,7 +161,7 @@ personalized_messages = {
                 'messages': ["Grande André\nHai ficcato?", '101.8', 'La carica dei 101.8'] + messages_to_everybody,
                 'last_sent': []},
     'Yoses': {'id': 62613803,
-              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti', 'Olmo centro del mondo'
+              'messages': ["Yoses\nPensi di essere comunista?", 'Yoses comunista che vota Monti', 'Olmo centro del mondo',
                            'Ma Yoses, sei stupido?', 'AAA cercasi coerenza', 'Scoppia il caso quan',
                            'Non come qualcun altro Agostini', "Yoses comunista con l'iphone",
                            'Sei un fallito'] + messages_to_everybody,
