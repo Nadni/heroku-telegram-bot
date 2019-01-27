@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import telepot
+import pickle
 import time
 import os
 import random
@@ -27,6 +28,8 @@ disservizi = -243280032
 leonardo = 24030913
 progetto_zucabot = -171074079
 test_group = -307834730
+with open('allowed_chats', 'rb') as f:
+    allowed_chats = pickle.load(f)
 offset = 0
 chain = ''
 
@@ -205,7 +208,7 @@ def is_time_in_range(start, end, x):
 
 
 def send_message(output_message, receiver):
-    if receiver in [disservizi, leonardo, progetto_zucabot, test_group]:
+    if receiver in allowed_chats:
         if output_message != '':
             bot.sendMessage(receiver, output_message)
         # has a change to send a double message
@@ -216,7 +219,8 @@ def send_message(output_message, receiver):
             elif output_message in offese:
                 bot.sendMessage(receiver, 'Scherzo, sei un grande')
     else:
-        output_message = "Questa è una chat illegale non autorizzata dall'egemone Leonardo Nadali"
+        output_message = '''Questa chat (ID: {}) è illegale e non è stata autorizzata dall'egemone Leonardo Nadali.
+                            \nPer richiederne l'abilitazione, inoltra questo messaggio a @nadni'''.format(chat)
         bot.sendMessage(receiver, output_message)
 
 
@@ -320,10 +324,39 @@ def personalized_message(input_message, author, probability=50):
     return output_message
 
 
+def allow_chat(received_message):
+    try:
+        text = received_message['text']
+    except KeyError:
+        text = ''
+
+    try:
+        splitted = text.split('(ID: ')[1]
+        splitted = splitted.split(')')[0]
+    except IndexError:
+        splitted = ''
+
+    if splitted != '':
+        try:
+            requesting_chat = int(splitted)
+        except ValueError:
+            return None
+        allowed_chats.append(requesting_chat)
+        with open('allowed_chats', 'wb') as f:
+            pickle.dump(allowed_chats, f)
+        print('\n'*5)
+        print('Chat {} allowed'.format(requesting_chat))
+        bot.sendMessage(leonardo, 'Chat {} autorizzata'.format(requesting_chat))
+
+
 # this is the function that will be called every time ZucaBot receives a new message
 def interaction(received_message, chat, authors):
     global chain
     output_message = ''
+
+    if authors[-1] == leonardo:
+        print('Padrone!')
+        allow_chat(received_message)
 
     # try to see if the received message contains any text, if so interacts, otherwise do nothing
     try:
@@ -555,8 +588,6 @@ for message in received_messages:
 while True:
     loop_cycle = 2  # number of seconds between loops
     time.sleep(loop_cycle)
-
-    print(personalized_messages['Beppe'])
 
     # variable that stores most recent messages
     received_messages = []
